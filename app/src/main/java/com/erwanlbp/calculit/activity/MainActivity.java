@@ -31,14 +31,24 @@ public class MainActivity extends AppCompatActivity {
         for (Map.Entry<String, Integer> entry : gameConfig.entrySet()) {
             intent.putExtra(entry.getKey(), entry.getValue());
         }
-        startActivity(intent);
-
-//        launchAskAnswer();
+        startActivityForResult(intent, GameActivity.FINISHED_COUNTING);
     }
 
-    private void launchAskAnswer() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GameActivity.FINISHED_COUNTING) {
+            startAskAnswer();
+        }
+        if (requestCode == AnswerActivity.ASK_USER_ANSWER) {
+            System.out.println(">>> Received user answer");
+        }
+
+    }
+
+    private void startAskAnswer() {
         Intent intent = new Intent(this, AnswerActivity.class);
 
-        startActivity(intent);
+        startActivityForResult(intent, AnswerActivity.ASK_USER_ANSWER);
     }
 }

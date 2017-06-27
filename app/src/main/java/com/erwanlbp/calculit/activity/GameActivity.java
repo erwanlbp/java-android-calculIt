@@ -13,6 +13,8 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
+    public static final int FINISHED_COUNTING = 1;
+
     private List<Integer> numbers;
     private int timeToPrint;
     private int curNumber;
@@ -27,12 +29,13 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         Intent intent = getIntent();
-        int timeToPrint = intent.getIntExtra(GameConfig.CONFIG_TIME_TO_PRINT, GameConfig.CONFIG_DEFAULT_TIME_TO_PRINT);
-        List<Integer> numbers = intent.getIntegerArrayListExtra(GameConfig.CONFIG_NUMBERS);
+        this.timeToPrint = intent.getIntExtra(GameConfig.CONFIG_TIME_TO_PRINT, GameConfig.CONFIG_DEFAULT_TIME_TO_PRINT);
+
+        this.numbers = intent.getIntegerArrayListExtra(GameConfig.CONFIG_NUMBERS);
+        this.numbers.add(0, 0);
 
         this.tvNumber = (TextView) findViewById(R.id.tvNumber);
-        this.numbers = numbers;
-        this.timeToPrint = timeToPrint;
+
         this.curNumber = 0;
 
         this.changeNumberTimerHandler = new Handler();
@@ -42,7 +45,6 @@ public class GameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         this.startChangingNumbers();
-//        finish();
     }
 
     @Override
@@ -54,12 +56,12 @@ public class GameActivity extends AppCompatActivity {
     private Runnable changeNumberTimerRunnable = new Runnable() {
         @Override
         public void run() {
-            tvNumber.setText(String.valueOf(numbers.get(curNumber)));
-            curNumber++;
-            if (curNumber >= numbers.size() - 1) {
+            if (curNumber >= numbers.size()) {
                 stopChangingNumber();
                 finish();
             } else {
+                tvNumber.setText(String.valueOf(numbers.get(curNumber)));
+                curNumber++;
                 changeNumberTimerHandler.postDelayed(changeNumberTimerRunnable, timeToPrint);
             }
         }

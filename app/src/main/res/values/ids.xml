@@ -2,7 +2,5 @@
 <resources>
     <item name="buttonLaunchGame" type="id"/>
     <item name="tvAppName" type="id"/>
-    <item name="tvMaxNumber" type="id"/>
-    <item name="tvNumbers" type="id"/>
-    <item name="tvTimeToPrint" type="id"/>
+    <item name="tvNumber" type="id"/>
 </resources>

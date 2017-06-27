@@ -2,4 +2,7 @@
     <string name="app_name">CalculIt</string>
     <string name="launch_a_game">Launch a game</string>
     <string name="calcul_it">Calcul It</string>
+    <string name="default_number_value">0</string>
+    <string name="label_answer">What is the answer ?</string>
+    <string name="button_answer">Ok go !</string>
 </resources>

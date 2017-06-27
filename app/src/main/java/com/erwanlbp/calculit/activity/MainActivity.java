@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
 import com.erwanlbp.calculit.GameConfig;
 import com.erwanlbp.calculit.R;
 
@@ -30,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
         for (Map.Entry<String, Integer> entry : gameConfig.entrySet()) {
             intent.putExtra(entry.getKey(), entry.getValue());
         }
+        startActivity(intent);
+
+//        launchAskAnswer();
+    }
+
+    private void launchAskAnswer() {
+        Intent intent = new Intent(this, AnswerActivity.class);
+
         startActivity(intent);
     }
 }

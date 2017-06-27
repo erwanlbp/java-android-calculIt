@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="buttonLaunchGame" type="id"/>
-    <item name="tvAppName" type="id"/>
-    <item name="tvNumber" type="id"/>
+    <item name="buttonLaunchGame" type="id" />
+    <item name="tvAppName" type="id" />
+    <item name="tvNumber" type="id" />
+    <item name="tvAnswerError" type="id" />
+    <item name="etUserAnswer" type="id" />
+    <item name="label_answer" type="id" />
+    <item name="button_answer" type="id" />
 </resources>

@@ -4,5 +4,7 @@
     <string name="calcul_it">Calcul It</string>
     <string name="default_number_value">0</string>
     <string name="label_answer">What is the answer ?</string>
-    <string name="button_answer">Ok go !</string>
+    <string name="button_answer">OK go !</string>
+    <string name="placeholder_answer">Answer</string>
+    <string name="label_error_answer">Error: Wrong format</string>
 </resources>

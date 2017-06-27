@@ -13,11 +13,9 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static final int FINISHED_COUNTING = 1;
-
     private List<Integer> numbers;
     private int timeToPrint;
-    private int curNumber;
+    private int currentNumber;
 
     private TextView tvNumber;
     private Handler changeNumberTimerHandler;
@@ -36,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
         this.tvNumber = (TextView) findViewById(R.id.tvNumber);
 
-        this.curNumber = 0;
+        this.currentNumber = 0;
 
         this.changeNumberTimerHandler = new Handler();
     }
@@ -56,12 +54,13 @@ public class GameActivity extends AppCompatActivity {
     private Runnable changeNumberTimerRunnable = new Runnable() {
         @Override
         public void run() {
-            if (curNumber >= numbers.size()) {
+            if (currentNumber >= numbers.size()) {
                 stopChangingNumber();
+                setResult(RESULT_OK);
                 finish();
             } else {
-                tvNumber.setText(String.valueOf(numbers.get(curNumber)));
-                curNumber++;
+                tvNumber.setText(String.valueOf(numbers.get(currentNumber)));
+                currentNumber++;
                 changeNumberTimerHandler.postDelayed(changeNumberTimerRunnable, timeToPrint);
             }
         }

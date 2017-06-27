@@ -13,8 +13,6 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static final int FINISHED_COUNTING = 1;
-
     private List<Integer> numbers;
     private int timeToPrint;
     private int curNumber;
@@ -58,6 +56,7 @@ public class GameActivity extends AppCompatActivity {
         public void run() {
             if (curNumber >= numbers.size()) {
                 stopChangingNumber();
+                setResult(RESULT_OK);
                 finish();
             } else {
                 tvNumber.setText(String.valueOf(numbers.get(curNumber)));

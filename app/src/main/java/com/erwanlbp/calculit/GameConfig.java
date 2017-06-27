@@ -42,5 +42,12 @@ public class GameConfig {
     public ArrayList<Integer> getNumbers() {
         return numbers;
     }
+
+    public boolean isCorrectResult(int answer) {
+        int sum = 0;
+        for (int i : numbers)
+            sum += i;
+        return sum == answer;
+    }
 }
 

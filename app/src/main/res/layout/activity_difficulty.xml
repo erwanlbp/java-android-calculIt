@@ -14,52 +14,66 @@
         android:id="@+id/buttonEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
         android:onClick="chooseDifficulty"
+        android:singleLine="false"
         android:text="@string/difficulty_easy" />
 
-    <Space
+    <TextView
+        android:id="@+id/tvEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="12" />
+        android:layout_weight="10"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_easy"
+        android:textStyle="italic" />
 
     <Button
         android:id="@+id/buttonMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_medium" />
 
-    <Space
+    <TextView
+        android:id="@+id/tvMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="12" />
+        android:layout_weight="10"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_medium"
+        android:textStyle="italic" />
 
     <Button
         android:id="@+id/buttonHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_weight="10"
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_hard" />
 
-    <Space
+    <TextView
+        android:id="@+id/tvHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="12" />
+        android:layout_weight="10"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_hard"
+        android:textStyle="italic" />
 
     <Button
         android:id="@+id/buttonGod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_god" />
 
-    <Space
+    <TextView
+        android:id="@+id/tvGod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="12" />
+        android:layout_weight="12"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_god"
+        android:textStyle="italic" />
+
 </LinearLayout>

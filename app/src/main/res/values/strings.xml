@@ -12,4 +12,8 @@
     <string name="difficulty_medium">Medium</string>
     <string name="difficulty_hard">Hard</string>
     <string name="difficulty_god">God</string>
+    <string name="timeToPrint_easy">1s</string>
+    <string name="timeToPrint_medium">0.8s</string>
+    <string name="timeToPrint_hard">0.6s</string>
+    <string name="timeToPrint_god">0.5s</string>
 </resources>

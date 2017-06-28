@@ -48,12 +48,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (requestCode == ActivityCode.ANSWER) {
             if (resultCode == RESULT_OK) {
-                int answer = data.getIntExtra(AnswerActivity.USER_ANSWER, 0);
-                if (this.gameConfig.isCorrectResult(answer)) {
-                    findViewById(R.id.tvAppName).setBackgroundColor(Color.GREEN);
-                } else {
-                    findViewById(R.id.tvAppName).setBackgroundColor(Color.RED);
-                }
+                int correctResult = gameConfig.getCorrectResult();
+                int userAnswer = data.getIntExtra(AnswerActivity.USER_ANSWER, correctResult - 1); // To be sure that the default value is wrong
+                startPrintResults(userAnswer, correctResult);
             }
         }
     }
@@ -61,5 +58,12 @@ public class MainActivity extends AppCompatActivity {
     private void startAskAnswer() {
         Intent intent = new Intent(this, AnswerActivity.class);
         startActivityForResult(intent, ActivityCode.ANSWER);
+    }
+
+    private void startPrintResults(int userAnswer, int correctResult) {
+        Intent intent = new Intent(this, PrintResultsActivity.class);
+        intent.putExtra(AnswerActivity.USER_ANSWER, userAnswer);
+        intent.putExtra(GameConfig.CONFIG_CORRECT_RESULT, correctResult);
+        startActivityForResult(intent, ActivityCode.SHOW_RESULT);
     }
 }

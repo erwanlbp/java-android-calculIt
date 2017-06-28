@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".activity.GameActivity"></activity>
         <activity android:name=".activity.AnswerActivity"></activity>
+        <activity android:name=".activity.DifficultyActivity"></activity>
+
     </application>
 
 </manifest>

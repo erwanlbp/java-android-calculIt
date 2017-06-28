@@ -1,5 +1,6 @@
 package com.erwanlbp.calculit.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private GameConfig gameConfig;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Integer> mapGameConfig = this.gameConfig.getParamsMap();
         ArrayList<Integer> numbers = this.gameConfig.getNumbers();
 
-        Intent intent = new Intent(this, GameActivity.class);
+        final Intent intent = new Intent(this, GameActivity.class);
         intent.putIntegerArrayListExtra(GameConfig.CONFIG_NUMBERS, numbers);
 
         for (Map.Entry<String, Integer> entry : mapGameConfig.entrySet()) {
@@ -62,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
                 createGameConfig(data);
             }
         }
+        if(requestCode == ActivityCode.SELECT_DIFFICULTY) {
+            if(resultCode == RESULT_OK) {
+                createGameConfig(data);
+            }
+        }
     }
 
     private void startAskAnswer() {
@@ -76,18 +82,12 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, ActivityCode.SHOW_RESULT);
     }
 
-    public void selectDifficulty(final View view) {
-        final Intent intent = new Intent(this, DifficultyActivity.class);
-        startActivityForResult(intent, ActivityCode.DIFFICULTY);
-    }
-
     public void selectDifficultyActivity(View view) {
         final Intent intent = new Intent(this, SelectDifficultyActivity.class);
         startActivityForResult(intent, ActivityCode.SELECT_DIFFICULTY);
     }
 
     private void createGameConfig(final Intent data) {
-        final Difficulty difficulty = Difficulty.parse(data.getIntExtra(SelectDifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));
-        gameConfig = new GameConfig(difficulty);
+        final Difficulty difficulty = Difficulty.parse(data.getIntExtra(DifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));gameConfig = new GameConfig(difficulty);
     }
 }

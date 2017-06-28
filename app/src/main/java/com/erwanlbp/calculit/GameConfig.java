@@ -38,6 +38,12 @@ public class GameConfig {
     }
 
     private GameConfig(final int n, final int maxNumber, Difficulty difficulty) {
+        this(CONFIG_DEFAULT_SIZE * (difficulty.getTimeToPrint() / 10),
+                CONFIG_DEFAULT_TIME_TO_PRINT / (difficulty.getTimeToPrint() / 10),
+                CONFIG_DEFAULT_MAX_NUMBER * (difficulty.getTimeToPrint() / 10));
+    }
+
+    private GameConfig(final int n, final int timeToPrint, final int maxNumber) {
         this.maxNumber = maxNumber;
         this.numbers = new ArrayList<>();
         for (int i = 0; i < n; i++)

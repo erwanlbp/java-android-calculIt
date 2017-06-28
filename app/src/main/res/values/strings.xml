@@ -15,4 +15,9 @@
     <string name="tv_your_answer_response">your answer</string>
     <string name="button_back_home">Back to Home</string>
     <string name="button_next_level">Next level</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="difficulty_easy">Easy</string>
+    <string name="difficulty_medium">Medium</string>
+    <string name="difficulty_hard">Hard</string>
+    <string name="difficulty_god">God</string>
 </resources>

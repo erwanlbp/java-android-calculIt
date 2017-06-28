@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,9 +13,7 @@
         android:id="@+id/buttonEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< 9e547168635ecff894b98bd13cf4fbed78600dff
         android:onClick="chooseDifficulty"
-        android:singleLine="false"
         android:text="@string/difficulty_easy" />
 
     <TextView
@@ -27,22 +24,11 @@
         android:gravity="top|center"
         android:text="@string/timeToPrint_easy"
         android:textStyle="italic" />
-=======
-        android:layout_weight="10"
-        android:onClick="chooseDifficulty"
-        android:text="@string/difficulty_easy" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="12" />
->>>>>>> add level
 
     <Button
         android:id="@+id/buttonMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< 9e547168635ecff894b98bd13cf4fbed78600dff
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_medium" />
 
@@ -54,23 +40,12 @@
         android:gravity="top|center"
         android:text="@string/timeToPrint_medium"
         android:textStyle="italic" />
-=======
-        android:layout_weight="10"
-        android:onClick="chooseDifficulty"
-        android:text="@string/difficulty_medium" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="12" />
->>>>>>> add level
 
     <Button
         android:id="@+id/buttonHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-<<<<<<< 9e547168635ecff894b98bd13cf4fbed78600dff
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_hard" />
 
@@ -82,22 +57,11 @@
         android:gravity="top|center"
         android:text="@string/timeToPrint_hard"
         android:textStyle="italic" />
-=======
-        android:layout_weight="10"
-        android:onClick="chooseDifficulty"
-        android:text="@string/difficulty_hard" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="12" />
->>>>>>> add level
 
     <Button
         android:id="@+id/buttonGod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< 9e547168635ecff894b98bd13cf4fbed78600dff
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_god" />
 
@@ -110,14 +74,4 @@
         android:text="@string/timeToPrint_god"
         android:textStyle="italic" />
 
-=======
-        android:layout_weight="10"
-        android:onClick="chooseDifficulty"
-        android:text="@string/difficulty_god" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="12" />
->>>>>>> add level
 </LinearLayout>

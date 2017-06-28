@@ -1,5 +1,6 @@
 package com.erwanlbp.calculit.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.erwanlbp.calculit.ActivityCode;
 import com.erwanlbp.calculit.GameConfig;
 import com.erwanlbp.calculit.R;
+import com.erwanlbp.calculit.activity.Enum.Difficulty;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -16,26 +18,29 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     public static final String APPNAME = "com.erwanlbp.calculit";
-
     private GameConfig gameConfig;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
     public void launchGame(View view) {
-        // TODO Remove when select difficulty is merged
-        this.gameConfig = new GameConfig(5, 1500, 10);
-        Map<String, Integer> gameConfig = this.gameConfig.getParamsMap();
+
+        if(this.gameConfig == null)
+            this.gameConfig = new GameConfig();
+
+        Map<String, Integer> mapGameConfig = this.gameConfig.getParamsMap();
         ArrayList<Integer> numbers = this.gameConfig.getNumbers();
 
-        Intent intent = new Intent(this, GameActivity.class);
+        final Intent intent = new Intent(this, GameActivity.class);
         intent.putIntegerArrayListExtra(GameConfig.CONFIG_NUMBERS, numbers);
-        for (Map.Entry<String, Integer> entry : gameConfig.entrySet()) {
+
+        for (Map.Entry<String, Integer> entry : mapGameConfig.entrySet()) {
             intent.putExtra(entry.getKey(), entry.getValue());
         }
+
         startActivityForResult(intent, ActivityCode.GAME);
     }
 
@@ -56,10 +61,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        if(requestCode == ActivityCode.DIFFICULTY) {
+            if(resultCode == RESULT_OK) {
+                createGameConfig(data);
+            }
+        }
     }
 
     private void startAskAnswer() {
         Intent intent = new Intent(this, AnswerActivity.class);
         startActivityForResult(intent, ActivityCode.ANSWER);
+    }
+
+    public void selectDifficulty(final View view) {
+        final Intent intent = new Intent(this, DifficultyActivity.class);
+        startActivityForResult(intent, ActivityCode.DIFFICULTY);
+    }
+
+    private void createGameConfig(final Intent data) {
+        final Difficulty difficulty = Difficulty.parse(data.getIntExtra(DifficultyActivity.DIFFICULTY, Difficulty.EASY.getValue()));
+        gameConfig = new GameConfig(difficulty);
     }
 }

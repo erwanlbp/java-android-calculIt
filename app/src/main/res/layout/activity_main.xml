@@ -31,4 +31,16 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAppName" />
 
+    <Button
+        android:id="@+id/buttonDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/button_main_activity"
+        android:onClick="selectDifficulty"
+        android:text="@string/difficulty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

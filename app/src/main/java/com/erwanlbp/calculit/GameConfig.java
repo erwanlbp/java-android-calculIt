@@ -25,24 +25,23 @@ public class GameConfig {
 
     private Difficulty difficulty;
     public static final String CONFIG_DIFFICULTY = MainActivity.APPNAME + "CONFIG_DIFFICULTY";
-    public static final int CONFIG_DEFAULT_DIFFICULTY = 10;
+    public static final int CONFIG_DEFAULT_DIFFICULTY = 1000;
 
     public GameConfig() {
         this(Difficulty.EASY);
     }
 
     public GameConfig(final Difficulty difficulty) {
-        this(CONFIG_DEFAULT_SIZE * (difficulty.getValue() / 10),
-                CONFIG_DEFAULT_TIME_TO_PRINT / (difficulty.getValue() / 10),
-                CONFIG_DEFAULT_MAX_NUMBER * (difficulty.getValue() / 10));
+        this(CONFIG_DEFAULT_SIZE, difficulty.getValue(), CONFIG_DEFAULT_MAX_NUMBER, difficulty);
     }
 
-    private GameConfig(final int n, final int timeToPrint, final int maxNumber) {
+    private GameConfig(final int n, final int timeToPrint, final int maxNumber, Difficulty difficulty) {
         this.maxNumber = maxNumber;
         this.numbers = new ArrayList<>();
         for (int i = 0; i < n; i++)
             this.numbers.add(generateRandomNumber(this.maxNumber));
         this.timeToPrint = timeToPrint;
+        this.difficulty = difficulty;
     }
 
     private int generateRandomNumber(int max) {

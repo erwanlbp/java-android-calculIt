@@ -38,7 +38,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:background="@drawable/button_main_activity"
-        android:onClick="selectDifficulty"
+        android:onClick="selectDifficultyActivity"
         android:text="@string/difficulty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />

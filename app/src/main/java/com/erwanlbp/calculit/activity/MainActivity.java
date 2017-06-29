@@ -88,13 +88,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createGameConfig(final Intent data) {
-        final Difficulty difficulty = Difficulty.parse(data.getIntExtra(DifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));gameConfig = new GameConfig(difficulty);
-    }
-
-    private void startPrintResults(int userAnswer, int correctResult) {
-        Intent intent = new Intent(this, PrintResultsActivity.class);
-        intent.putExtra(AnswerActivity.USER_ANSWER, userAnswer);
-        intent.putExtra(GameConfig.CONFIG_CORRECT_RESULT, correctResult);
-        startActivityForResult(intent, ActivityCode.SHOW_RESULT);
+        final Difficulty difficulty = Difficulty.parse(data.getIntExtra(SelectDifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));gameConfig = new GameConfig(difficulty);
     }
 }

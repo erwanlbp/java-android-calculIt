@@ -35,6 +35,7 @@ public class GameConfig {
 
     public GameConfig(final Difficulty difficulty) {
         this(CONFIG_DEFAULT_SIZE, CONFIG_DEFAULT_MAX_NUMBER, difficulty);
+<<<<<<< HEAD
 <<<<<<< 8d3737a8ff09b2653be8e96ce56c82ab439bc6b5
     }
 
@@ -42,6 +43,8 @@ public class GameConfig {
         this(CONFIG_DEFAULT_SIZE, difficulty.getTimeToPrint(), CONFIG_DEFAULT_MAX_NUMBER, difficulty);
 =======
 >>>>>>> review select difficulty
+=======
+>>>>>>> 929479d41792ab53a44400f3dac0a7dd812ed399
     }
 
     private GameConfig(final int n, final int maxNumber, Difficulty difficulty) {

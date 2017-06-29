@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameConfig {
+    public static final String CONFIG_CORRECT_RESULT = MainActivity.APPNAME + "CONFIG_CORRECT_RESULT";
+
     private ArrayList<Integer> numbers;
     public static final String CONFIG_NUMBERS = MainActivity.APPNAME + "CONFIG_NUMBERS";
 
@@ -59,11 +61,11 @@ public class GameConfig {
         return numbers;
     }
 
-    public boolean isCorrectResult(int answer) {
+    public int getCorrectResult() {
         int sum = 0;
         for (int i : numbers)
             sum += i;
-        return sum == answer;
+        return sum;
     }
 }
 

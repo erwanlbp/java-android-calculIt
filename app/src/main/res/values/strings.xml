@@ -16,4 +16,12 @@
     <string name="timeToPrint_medium">0.8s</string>
     <string name="timeToPrint_hard">0.6s</string>
     <string name="timeToPrint_god">0.5s</string>
+    <string name="label_correct_answer">Correct !</string>
+    <string name="label_wrong_answer">Wrong !</string>
+    <string name="label_your_answer">Your answer :</string>
+    <string name="label_tv_correct_answer_result">The correct answer :</string>
+    <string name="tv_correct_answer_response">Correct Num</string>
+    <string name="tv_your_answer_response">your answer</string>
+    <string name="button_back_home">Back to Home</string>
+    <string name="button_next_level">Next level</string>
 </resources>

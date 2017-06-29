@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="12" />
+
+    <Button
+        android:id="@+id/buttonEasy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="chooseDifficulty"
+        android:text="@string/difficulty_easy" />
+
+    <TextView
+        android:id="@+id/tvEasy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_easy"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/buttonMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="chooseDifficulty"
+        android:text="@string/difficulty_medium" />
+
+    <TextView
+        android:id="@+id/tvMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_medium"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/buttonHard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:onClick="chooseDifficulty"
+        android:text="@string/difficulty_hard" />
+
+    <TextView
+        android:id="@+id/tvHard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_hard"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/buttonGod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="chooseDifficulty"
+        android:text="@string/difficulty_god" />
+
+    <TextView
+        android:id="@+id/tvGod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="12"
+        android:gravity="top|center"
+        android:text="@string/timeToPrint_god"
+        android:textStyle="italic" />
+
+</LinearLayout>

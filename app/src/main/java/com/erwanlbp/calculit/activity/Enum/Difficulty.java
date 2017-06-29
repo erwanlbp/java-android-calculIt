@@ -2,10 +2,10 @@ package com.erwanlbp.calculit.activity.Enum;
 
 public enum Difficulty {
 
-    EASY(1000),
-    MEDIUM(800),
-    HARD(600),
-    GOD(500);
+    EASY(2000),
+    MEDIUM(1300),
+    HARD(800),
+    GOD(400);
 
     private final int timeToPrint;
 
@@ -13,7 +13,7 @@ public enum Difficulty {
         this.timeToPrint = timeToPrint;
     }
 
-    public int getValue() {
+    public int getTimeToPrint() {
         return this.timeToPrint;
     }
 
@@ -23,13 +23,13 @@ public enum Difficulty {
 
     public static Difficulty parse(final int difficulty) {
         switch (difficulty) {
-            case 1000:
+            case 2000:
                 return EASY;
-            case 800:
+            case 1300:
                 return MEDIUM;
-            case 600:
+            case 800:
                 return HARD;
-            case 500:
+            case 400:
                 return GOD;
             default:
                 return EASY;

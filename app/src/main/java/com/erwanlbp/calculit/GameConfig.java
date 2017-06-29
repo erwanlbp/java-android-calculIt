@@ -13,7 +13,7 @@ public class GameConfig {
     public static final String CONFIG_NUMBERS = MainActivity.APPNAME + "CONFIG_NUMBERS";
 
     private int size;
-    public static final int CONFIG_DEFAULT_SIZE = 5;
+    public static final int CONFIG_DEFAULT_SIZE = 3;
 
     private int timeToPrint;
     public static final String CONFIG_TIME_TO_PRINT = MainActivity.APPNAME + "CONFIG_TIME_TO_PRINT";
@@ -25,22 +25,22 @@ public class GameConfig {
 
     private Difficulty difficulty;
     public static final String CONFIG_DIFFICULTY = MainActivity.APPNAME + "CONFIG_DIFFICULTY";
-    public static final int CONFIG_DEFAULT_DIFFICULTY = 1000;
+    public static final int CONFIG_DEFAULT_DIFFICULTY = Difficulty.EASY.getTimeToPrint();
 
     public GameConfig() {
         this(Difficulty.EASY);
     }
 
     public GameConfig(final Difficulty difficulty) {
-        this(CONFIG_DEFAULT_SIZE, difficulty.getValue(), CONFIG_DEFAULT_MAX_NUMBER, difficulty);
+        this(CONFIG_DEFAULT_SIZE, CONFIG_DEFAULT_MAX_NUMBER, difficulty);
     }
 
-    private GameConfig(final int n, final int timeToPrint, final int maxNumber, Difficulty difficulty) {
+    private GameConfig(final int n, final int maxNumber, Difficulty difficulty) {
         this.maxNumber = maxNumber;
         this.numbers = new ArrayList<>();
         for (int i = 0; i < n; i++)
             this.numbers.add(generateRandomNumber(this.maxNumber));
-        this.timeToPrint = timeToPrint;
+        this.timeToPrint = difficulty.getTimeToPrint();
         this.difficulty = difficulty;
     }
 

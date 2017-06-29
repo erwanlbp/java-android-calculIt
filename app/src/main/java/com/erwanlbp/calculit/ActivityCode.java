@@ -5,5 +5,5 @@ public class ActivityCode {
     public final static int MAIN = value++;
     public final static int GAME = value++;
     public final static int ANSWER = value++;
-    public final static int DIFFICULTY = value++;
+    public final static int SELECT_DIFFICULTY = value++;
 }

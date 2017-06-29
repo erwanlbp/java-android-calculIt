@@ -40,6 +40,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
         android:layout_row="4"
+        android:onClick="nextLevel"
         android:text="@string/button_next_level"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -63,7 +64,6 @@
         android:layout_height="wrap_content"
         android:layout_column="1"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
         android:layout_row="0"
         android:text="@string/label_correct_answer"
         android:textSize="36sp"
@@ -72,7 +72,8 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/tvYourAnswer"
@@ -99,5 +100,27 @@
         android:textSize="18sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvResultAnswer" />
+
+    <TextView
+        android:id="@+id/tvPrintResultLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/label_level"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPrintResultLevelValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="lvlValue"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@+id/tvPrintResultLevel"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

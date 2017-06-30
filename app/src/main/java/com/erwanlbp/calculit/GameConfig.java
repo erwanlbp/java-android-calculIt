@@ -29,21 +29,31 @@ public class GameConfig {
     public static final String CONFIG_DIFFICULTY = MainActivity.APPNAME + "CONFIG_DIFFICULTY";
     public static final int CONFIG_DEFAULT_DIFFICULTY = Difficulty.EASY.getTimeToPrint();
 
+    private int level;
+    public static final int CONFIG_DEFAULT_LEVEL = 1;
+    public static final String CONFIG_LEVEL = MainActivity.APPNAME + "CONFIG_LEVEL";
+
     public GameConfig() {
         this(Difficulty.EASY);
     }
 
     public GameConfig(final Difficulty difficulty) {
-        this(CONFIG_DEFAULT_SIZE, CONFIG_DEFAULT_MAX_NUMBER, difficulty);
+        this(CONFIG_DEFAULT_SIZE, CONFIG_DEFAULT_MAX_NUMBER, difficulty, CONFIG_DEFAULT_LEVEL);
     }
 
-    private GameConfig(final int n, final int maxNumber, Difficulty difficulty) {
+    public GameConfig(final Difficulty difficulty, final int level) {
+        this(CONFIG_DEFAULT_SIZE + (level / 4), CONFIG_DEFAULT_MAX_NUMBER + (level / 5), difficulty, level);
+    }
+
+    private GameConfig(final int size, final int maxNumber, Difficulty difficulty, int level) {
         this.maxNumber = maxNumber;
+        this.level = level;
+        this.size = size;
         this.numbers = new ArrayList<>();
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < this.size; i++)
             this.numbers.add(generateRandomNumber(this.maxNumber));
-        this.timeToPrint = difficulty.getTimeToPrint();
         this.difficulty = difficulty;
+        this.timeToPrint = this.difficulty.getTimeToPrint();
     }
 
     private int generateRandomNumber(int max) {
@@ -54,6 +64,7 @@ public class GameConfig {
         Map<String, Integer> configMap = new HashMap<>();
         configMap.put(CONFIG_TIME_TO_PRINT, timeToPrint);
         configMap.put(CONFIG_MAX_NUMBER, maxNumber);
+        configMap.put(CONFIG_LEVEL, level);
         return configMap;
     }
 
@@ -66,6 +77,18 @@ public class GameConfig {
         for (int i : numbers)
             sum += i;
         return sum;
+    }
+
+    public GameConfig nextLevel() {
+        return new GameConfig(this.difficulty, ++this.level);
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }
 

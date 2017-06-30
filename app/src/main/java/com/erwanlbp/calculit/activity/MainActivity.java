@@ -1,10 +1,8 @@
 package com.erwanlbp.calculit.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.erwanlbp.calculit.ActivityCode;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchGame(View view) {
 
-        if(this.gameConfig == null)
+        if (this.gameConfig == null)
             this.gameConfig = new GameConfig();
 
         Map<String, Integer> mapGameConfig = this.gameConfig.getParamsMap();
@@ -53,20 +51,22 @@ public class MainActivity extends AppCompatActivity {
         }
         if (requestCode == ActivityCode.ANSWER) {
             if (resultCode == RESULT_OK) {
-                int correctResult = gameConfig.getCorrectResult();
-                int userAnswer = data.getIntExtra(AnswerActivity.USER_ANSWER, correctResult - 1); // To be sure that the default value is wrong
-                startPrintResults(userAnswer, correctResult);
+                int userAnswer = data.getIntExtra(AnswerActivity.USER_ANSWER, 0);
+                startPrintResults(userAnswer);
             }
         }
-        if(requestCode == ActivityCode.SELECT_DIFFICULTY) {
-            if(resultCode == RESULT_OK) {
+        if (requestCode == ActivityCode.SELECT_DIFFICULTY) {
+            if (resultCode == RESULT_OK) {
                 createGameConfig(data);
             }
         }
-        if(requestCode == ActivityCode.SELECT_DIFFICULTY) {
-            if(resultCode == RESULT_OK) {
-                createGameConfig(data);
+        if (requestCode == ActivityCode.SHOW_RESULT) {
+            if (resultCode == PrintResultsActivity.NEXT_LEVEL) {
+                gameConfig = gameConfig.nextLevel();
+                launchGame(null);
             }
+            if (resultCode == PrintResultsActivity.BACK_HOME)
+                gameConfig = new GameConfig(gameConfig.getDifficulty());
         }
     }
 
@@ -75,10 +75,12 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, ActivityCode.ANSWER);
     }
 
-    private void startPrintResults(int userAnswer, int correctResult) {
+    private void startPrintResults(int userAnswer) {
+        int correctResult = gameConfig.getCorrectResult();
         Intent intent = new Intent(this, PrintResultsActivity.class);
         intent.putExtra(AnswerActivity.USER_ANSWER, userAnswer);
         intent.putExtra(GameConfig.CONFIG_CORRECT_RESULT, correctResult);
+        intent.putExtra(GameConfig.CONFIG_LEVEL, gameConfig.getLevel());
         startActivityForResult(intent, ActivityCode.SHOW_RESULT);
     }
 
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createGameConfig(final Intent data) {
-        final Difficulty difficulty = Difficulty.parse(data.getIntExtra(SelectDifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));gameConfig = new GameConfig(difficulty);
+        final Difficulty difficulty = Difficulty.parse(data.getIntExtra(SelectDifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));
+        gameConfig = new GameConfig(difficulty);
     }
 }

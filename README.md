@@ -1,0 +1,2 @@
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/98dddcf927ad4782b141c2f0b69fb100)](https://www.codacy.com/app/erwan.lbp/java-android-calculIt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ErwanLBP/java-android-calculIt&amp;utm_campaign=Badge_Grade)

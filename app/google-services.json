@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1001647651039",
+    "firebase_url": "https://calculit-5fda3.firebaseio.com",
+    "project_id": "calculit-5fda3",
+    "storage_bucket": "calculit-5fda3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001647651039:android:ecd1344211bf7ece",
+        "android_client_info": {
+          "package_name": "com.erwanlbp.calculit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001647651039-ajj492418a56fe1bfrdo7gipj4194ml9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.erwanlbp.calculit",
+            "certificate_hash": "646ab61556f7642224bc207a9f4e904f8a4b64d8"
+          }
+        },
+        {
+          "client_id": "1001647651039-6trdupir6t7vpi28tqu18uhqe4jih2f6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbyUjpOug12hIdVj8KZnC6ODLgCiouhL4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001647651039-6trdupir6t7vpi28tqu18uhqe4jih2f6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

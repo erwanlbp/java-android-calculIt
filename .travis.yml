@@ -15,10 +15,20 @@ android:
     # The SDK version used to compile your project
     - android-25
 
-install :
-  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
-  - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+# install :
+  # - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+  # - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 
+dependencies:
+  pre:
+    - mkdir -p ${ANDROID_HOME}/licenses
+    - echo $ANDROID_SDK_LICENSE > ${ANDROID_HOME}/licenses/android-sdk-license
+    - bash ./misc/download_keystore.sh
+  override:
+    # we are cheating because there is a problem with constraint layout ATM
+    # see: https://code.google.com/p/android/issues/detail?id=212128
+    - ./gradlew dependencies || true
+    
 licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'

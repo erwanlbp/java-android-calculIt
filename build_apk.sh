@@ -4,8 +4,8 @@ echo
 echo "--- Build APK"
 ./gradlew assemble
 
-versionCode=`grep -oP 'versionCode \K.*' ./app/build.gradle`
-versionName=`grep -oP 'versionName "\K.*"' ./app/build.gradle | grep -o '[^"].*[^"]'`
+versionCode=$(grep -oP 'versionCode \K.*' ./app/build.gradle)
+versionName=$(grep -oP 'versionName "\K.*"' ./app/build.gradle | grep -o '[^"].*[^"]')
 apkName="CalculIt-$versionCode-$versionName.apk"
 
 echo

@@ -1,9 +1,12 @@
 package com.erwanlbp.calculit.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.erwanlbp.calculit.GameConfig;
@@ -19,6 +22,7 @@ public class GameActivity extends AppCompatActivity {
 
     private TextView tvNumber;
     private Handler changeNumberTimerHandler;
+    private ProgressBar pbRemainingNumbers;
 
 
     @Override
@@ -37,6 +41,10 @@ public class GameActivity extends AppCompatActivity {
         this.currentNumber = 0;
 
         this.changeNumberTimerHandler = new Handler();
+
+        // ----- Progress Bar for the remaining numbers -----
+        this.pbRemainingNumbers = (ProgressBar) findViewById(R.id.pbGameNumbers);
+        this.pbRemainingNumbers.setMax(this.numbers.size()-1); // Because we added the zero to the numbers list
     }
 
     @Override
@@ -59,7 +67,9 @@ public class GameActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 finish();
             } else {
+                pbRemainingNumbers.setProgress(currentNumber);
                 tvNumber.setText(String.valueOf(numbers.get(currentNumber)));
+                tvNumber.setTextColor(currentNumber % 2 == 0 ? Color.GRAY : Color.WHITE);
                 currentNumber++;
                 changeNumberTimerHandler.postDelayed(changeNumberTimerRunnable, timeToPrint);
             }

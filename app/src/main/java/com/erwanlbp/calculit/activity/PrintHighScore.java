@@ -1,7 +1,6 @@
 package com.erwanlbp.calculit.activity;
 
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,7 +12,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.enum_app.Difficulty;
 import com.erwanlbp.calculit.activity.model.User;
 
 public class PrintHighScore extends AppCompatActivity {
@@ -26,7 +24,7 @@ public class PrintHighScore extends AppCompatActivity {
         Intent intent = getIntent();
         final String name = intent.getStringExtra(User.USER_NAME);
         final int highScore = intent.getIntExtra(User.USER_HIGH_SCORE, 0);
-        final Spinner spinner = (Spinner)findViewById(R.id.spinnerHS);
+        final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
 
         //TODO a changer : initGlobalHS();
         initGlobalHS(name, highScore);
@@ -39,7 +37,8 @@ public class PrintHighScore extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {}
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
         });
     }
 
@@ -52,12 +51,12 @@ public class PrintHighScore extends AppCompatActivity {
         TextView textViewName = new TextView(this);
         textViewName.setText(name);
         textViewName.setGravity(Gravity.CENTER);
-        textViewName.setLayoutParams( new TableRow.LayoutParams( 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1 ) );
+        textViewName.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
         TextView textViewHighScore = new TextView(this);
         textViewHighScore.setText(String.valueOf(highScore));
         textViewHighScore.setGravity(Gravity.CENTER);
-        textViewHighScore.setLayoutParams( new TableRow.LayoutParams( 0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1 ) );
+        textViewHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
         row.addView(textViewName);
         row.addView(textViewHighScore);

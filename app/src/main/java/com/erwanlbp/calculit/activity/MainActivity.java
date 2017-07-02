@@ -1,6 +1,5 @@
 package com.erwanlbp.calculit.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,7 @@ import android.view.View;
 import com.erwanlbp.calculit.activity.config.ActivityCode;
 import com.erwanlbp.calculit.activity.config.GameConfig;
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.enum_app.Difficulty;
+import com.erwanlbp.calculit.activity.enums.Difficulty;
 import com.erwanlbp.calculit.activity.model.User;
 
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (resultCode == PrintResultsActivity.BACK_HOME)
                 this.user.setHighScore(data.getIntExtra(PrintResultsActivity.HIGHSCORE, 0));
-                gameConfig = new GameConfig(gameConfig.getDifficulty());
+            gameConfig = new GameConfig(gameConfig.getDifficulty());
         }
         if (requestCode == ActivityCode.INIT_USER) {
             if (resultCode == RESULT_OK) {

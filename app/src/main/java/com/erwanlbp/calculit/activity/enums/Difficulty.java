@@ -1,4 +1,4 @@
-package com.erwanlbp.calculit.activity.enum_app;
+package com.erwanlbp.calculit.activity.enums;
 
 public enum Difficulty {
 

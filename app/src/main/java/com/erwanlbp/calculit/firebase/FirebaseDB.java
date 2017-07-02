@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseDB {
 
-    public static void WriteTest() {
+    public static void writeTest() {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         database.setValue("COUCOU");
     }

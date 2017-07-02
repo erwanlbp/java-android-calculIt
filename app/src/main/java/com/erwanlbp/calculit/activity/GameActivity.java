@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.erwanlbp.calculit.GameConfig;
+import com.erwanlbp.calculit.activity.config.GameConfig;
 import com.erwanlbp.calculit.R;
 
 import java.util.List;

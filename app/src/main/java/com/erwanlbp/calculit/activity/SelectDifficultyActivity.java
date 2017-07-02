@@ -6,11 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.Enum.Difficulty;
+import com.erwanlbp.calculit.activity.enum_app.Difficulty;
 
 public class SelectDifficultyActivity extends AppCompatActivity {
 
-    public static final String DIFFICULTY = MainActivity.APPNAME + "difficulty";
+    public static final String DIFFICULTY = MainActivity.APPNAME + "DIFFICULTY";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

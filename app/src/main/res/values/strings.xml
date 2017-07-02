@@ -25,4 +25,13 @@
     <string name="button_back_home">Back to Home</string>
     <string name="button_next_level">Next level</string>
     <string name="label_level">Lvl.</string>
+    <string name="set_name">Choose a name</string>
+    <string name="check_name">Let\'s kick some ass !</string>
+    <string name="high_score">High Score</string>
+    <string-array name="high_score_spinner">
+        <item>Global</item>
+        <item>Easy</item>
+        <item>Medium</item>
+        <item>Hard</item>
+    </string-array>
 </resources>

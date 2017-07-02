@@ -1,14 +1,16 @@
 package com.erwanlbp.calculit.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.erwanlbp.calculit.ActivityCode;
-import com.erwanlbp.calculit.GameConfig;
+import com.erwanlbp.calculit.activity.config.ActivityCode;
+import com.erwanlbp.calculit.activity.config.GameConfig;
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.Enum.Difficulty;
+import com.erwanlbp.calculit.activity.enum_app.Difficulty;
+import com.erwanlbp.calculit.activity.model.User;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,17 +19,23 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String APPNAME = "com.erwanlbp.calculit";
     private GameConfig gameConfig;
+    private User user;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Intent intent = new Intent(this, InitUserActivity.class);
+        startActivityForResult(intent, ActivityCode.INIT_USER);
     }
 
     public void launchGame(View view) {
 
         if (this.gameConfig == null)
             this.gameConfig = new GameConfig();
+
+        System.out.println(this.user);
 
         Map<String, Integer> mapGameConfig = this.gameConfig.getParamsMap();
         ArrayList<Integer> numbers = this.gameConfig.getNumbers();
@@ -66,7 +74,13 @@ public class MainActivity extends AppCompatActivity {
                 launchGame(null);
             }
             if (resultCode == PrintResultsActivity.BACK_HOME)
+                this.user.setHighScore(data.getIntExtra(PrintResultsActivity.HIGHSCORE, 0));
                 gameConfig = new GameConfig(gameConfig.getDifficulty());
+        }
+        if (requestCode == ActivityCode.INIT_USER) {
+            if (resultCode == RESULT_OK) {
+                this.user = new User(data.getStringExtra(InitUserActivity.USER_INFO), 0);
+            }
         }
     }
 
@@ -92,5 +106,12 @@ public class MainActivity extends AppCompatActivity {
     private void createGameConfig(final Intent data) {
         final Difficulty difficulty = Difficulty.parse(data.getIntExtra(SelectDifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));
         gameConfig = new GameConfig(difficulty);
+    }
+
+    public void printHighScore(View view) {
+        final Intent intent = new Intent(this, PrintHighScore.class);
+        intent.putExtra(User.USER_NAME, this.user.getName());
+        intent.putExtra(User.USER_HIGH_SCORE, this.user.getHighScore());
+        startActivityForResult(intent, ActivityCode.SHOW_HIGH_SCORE);
     }
 }

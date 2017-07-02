@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.erwanlbp.calculit.R;
+import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.model.User;
 
 public class PrintHighScoresActivity extends AppCompatActivity {
@@ -26,7 +27,8 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_print_high_score);
 
         Intent intent = getIntent();
-        final String name = intent.getStringExtra(User.USER_PSEUDO);
+        // TODO Do something with the pseudo
+        String pseudo = intent.getStringExtra(User.USER_PSEUDO);
         highScoreEasy = intent.getIntExtra(User.USER_HIGH_SCORE_EASY, 0);
         highScoreMedium = intent.getIntExtra(User.USER_HIGH_SCORE_MEDIUM, 0);
         highScoreHard = intent.getIntExtra(User.USER_HIGH_SCORE_HARD, 0);
@@ -34,12 +36,13 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
 
         //TODO a changer : initGlobalHS();
-        initGlobalHS(name, highScoreEasy);
+        changeHighScore(Difficulty.EASY);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                final String difficulty = spinner.getSelectedItem().toString();
+                final String difficultyStr = spinner.getSelectedItem().toString();
+                final Difficulty difficulty = Difficulty.parse(difficultyStr);
                 changeHighScore(difficulty);
             }
 
@@ -50,19 +53,15 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         });
     }
 
-    //TODO a changer : private void initGlobalHS() {
-    private void initGlobalHS(String name, int highScore) {
-        // Get data firebase global high score
+    private void changeHighScore(Difficulty difficulty) {
         TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);
         TableRow row = new TableRow(this);
 
         TextView textViewName = new TextView(this);
-        textViewName.setText(name);
         textViewName.setGravity(Gravity.CENTER);
         textViewName.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
         TextView textViewHighScore = new TextView(this);
-        textViewHighScore.setText(String.valueOf(highScore));
         textViewHighScore.setGravity(Gravity.CENTER);
         textViewHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
@@ -70,10 +69,23 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         row.addView(textViewHighScore);
 
         tableLayout.addView(row);
-    }
 
-    private void changeHighScore(String difficulty) {
-        // Get info from firebase
-        System.out.println(difficulty);
+        switch (difficulty) {
+            case MEDIUM:
+                // Get data firebase high score Medium
+                textViewName.setText(Difficulty.MEDIUM.toString());
+                textViewHighScore.setText(String.valueOf(highScoreMedium));
+                break;
+            case HARD:
+                // Get data firebase high score Hard
+                textViewName.setText(Difficulty.HARD.toString());
+                textViewHighScore.setText(String.valueOf(highScoreHard));
+                break;
+            default: // Case EASY
+                // Get data firebase high score Easy
+                textViewName.setText(Difficulty.EASY.toString());
+                textViewHighScore.setText(String.valueOf(highScoreEasy));
+                break;
+        }
     }
 }

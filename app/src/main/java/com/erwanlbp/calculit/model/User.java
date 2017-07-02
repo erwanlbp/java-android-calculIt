@@ -82,21 +82,18 @@ public class User {
     }
 
     public boolean updateHighScore(Difficulty difficulty, int newScore) {
-        if (difficulty == Difficulty.EASY)
-            if (this.highScoreEasy < newScore) {
-                this.highScoreEasy = newScore;
-                return true;
-            }
-        if (difficulty == Difficulty.MEDIUM)
-            if (this.highScoreMedium < newScore) {
-                this.highScoreMedium = newScore;
-                return true;
-            }
-        if (difficulty == Difficulty.HARD)
-            if (this.highScoreHard < newScore) {
-                this.highScoreHard = newScore;
-                return true;
-            }
+        if (difficulty == Difficulty.EASY && this.highScoreEasy < newScore) {
+            this.highScoreEasy = newScore;
+            return true;
+        }
+        if (difficulty == Difficulty.MEDIUM && this.highScoreMedium < newScore) {
+            this.highScoreMedium = newScore;
+            return true;
+        }
+        if (difficulty == Difficulty.HARD && this.highScoreHard < newScore) {
+            this.highScoreHard = newScore;
+            return true;
+        }
         return false;
     }
 }

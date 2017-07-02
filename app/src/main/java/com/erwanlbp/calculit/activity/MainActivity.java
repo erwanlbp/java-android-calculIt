@@ -109,8 +109,12 @@ public class MainActivity extends AppCompatActivity {
         gameConfig = new GameConfig(difficulty);
     }
 
-    public void printHighScore(View view) {
+    public void startPrintHighScores(View view) {
         final Intent intent = new Intent(this, PrintHighScoresActivity.class);
+        intent.putExtra(User.USER_PSEUDO, user.getPseudo());
+        intent.putExtra(User.USER_HIGH_SCORE_EASY, user.getHighScoreEasy());
+        intent.putExtra(User.USER_HIGH_SCORE_MEDIUM, user.getHighScoreMedium());
+        intent.putExtra(User.USER_HIGH_SCORE_HARD, user.getHighScoreHard());
         startActivityForResult(intent, ActivityCode.SHOW_HIGH_SCORE);
     }
 }

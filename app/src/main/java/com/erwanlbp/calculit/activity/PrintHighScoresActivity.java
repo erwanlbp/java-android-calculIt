@@ -28,7 +28,7 @@ public class PrintHighScoresActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         // TODO Do something with the pseudo
-        String pseudo = intent.getStringExtra(User.USER_PSEUDO);
+//        String pseudo = intent.getStringExtra(User.USER_PSEUDO);
         highScoreEasy = intent.getIntExtra(User.USER_HIGH_SCORE_EASY, 0);
         highScoreMedium = intent.getIntExtra(User.USER_HIGH_SCORE_MEDIUM, 0);
         highScoreHard = intent.getIntExtra(User.USER_HIGH_SCORE_HARD, 0);

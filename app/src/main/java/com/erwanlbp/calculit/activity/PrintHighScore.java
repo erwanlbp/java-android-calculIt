@@ -38,6 +38,7 @@ public class PrintHighScore extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
+                //TODO to improve
             }
         });
     }

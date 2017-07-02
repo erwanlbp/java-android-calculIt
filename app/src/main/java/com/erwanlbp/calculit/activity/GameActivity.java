@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
 
         // ----- Progress Bar for the remaining numbers -----
         this.pbRemainingNumbers = (ProgressBar) findViewById(R.id.pbGameNumbers);
-        this.pbRemainingNumbers.setMax(this.numbers.size()-1); // Because we added the zero to the numbers list
+        this.pbRemainingNumbers.setMax(this.numbers.size() - 1); // Because we added the zero to the numbers list
     }
 
     @Override

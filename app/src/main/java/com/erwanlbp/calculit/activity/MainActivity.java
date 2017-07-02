@@ -10,6 +10,8 @@ import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -25,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Intent intent = new Intent(this, InitUserActivity.class);
-        startActivityForResult(intent, ActivityCode.INIT_USER);
+        startUserActivity();
     }
 
     public void launchGame(View view) {
@@ -44,33 +45,28 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(entry.getKey(), entry.getValue());
         }
 
-        startActivityForResult(intent, ActivityCode.GAME);
+        startActivityForResult(intent, ActivityCode.RQ_GAME);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ActivityCode.GAME) {
-            if (resultCode == RESULT_OK)
-                startAskAnswer();
+        if (requestCode == ActivityCode.RQ_GAME && resultCode == RESULT_OK) {
+            startAskAnswer();
         }
-        if (requestCode == ActivityCode.ANSWER) {
-            if (resultCode == RESULT_OK) {
-                int userAnswer = data.getIntExtra(AnswerActivity.USER_ANSWER, 0);
-                startPrintResults(userAnswer);
-            }
+        if (requestCode == ActivityCode.RQ_ANSWER && resultCode == RESULT_OK) {
+            int userAnswer = data.getIntExtra(AnswerActivity.USER_ANSWER, 0);
+            startPrintResults(userAnswer);
         }
-        if (requestCode == ActivityCode.SELECT_DIFFICULTY) {
-            if (resultCode == RESULT_OK) {
-                createGameConfig(data);
-            }
+        if (requestCode == ActivityCode.RQ_SELECT_DIFFICULTY && resultCode == RESULT_OK) {
+            createGameConfig(data);
         }
-        if (requestCode == ActivityCode.SHOW_RESULT) {
-            if (resultCode == PrintResultsActivity.NEXT_LEVEL) {
+        if (requestCode == ActivityCode.RQ_SHOW_RESULT) {
+            if (resultCode == ActivityCode.RC_NEXT_LEVEL) {
                 gameConfig = gameConfig.nextLevel();
                 launchGame(null);
             }
-            if (resultCode == PrintResultsActivity.BACK_HOME) {
+            if (resultCode == ActivityCode.RC_BACK_HOME) {
                 // TODO Finished Play
                 // Finished playing, so last level is the current one
                 this.user.updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel());
@@ -78,16 +74,21 @@ public class MainActivity extends AppCompatActivity {
                 gameConfig = new GameConfig(gameConfig.getDifficulty());
             }
         }
-        if (requestCode == ActivityCode.INIT_USER) {
-            if (resultCode == RESULT_OK) {
-                this.user = new User(data.getStringExtra(InitUserActivity.USER_EMAIL), data.getStringExtra(InitUserActivity.USER_INFO), 0, 0, 0);
+        if (requestCode == ActivityCode.RQ_USER) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (resultCode == RESULT_OK && user != null) {
+                this.user = new User(user.getEmail(), user.getDisplayName(), 0, 0, 0);
+            } else {
+                // We only deal with user connected
+                // TODO [IMPROVE] Allow user no to be authentified
+                startUserActivity();
             }
         }
     }
 
     private void startAskAnswer() {
         Intent intent = new Intent(this, AnswerActivity.class);
-        startActivityForResult(intent, ActivityCode.ANSWER);
+        startActivityForResult(intent, ActivityCode.RQ_ANSWER);
     }
 
     private void startPrintResults(int userAnswer) {
@@ -96,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(AnswerActivity.USER_ANSWER, userAnswer);
         intent.putExtra(GameConfig.CONFIG_CORRECT_RESULT, correctResult);
         intent.putExtra(GameConfig.CONFIG_LEVEL, gameConfig.getLevel());
-        startActivityForResult(intent, ActivityCode.SHOW_RESULT);
+        startActivityForResult(intent, ActivityCode.RQ_SHOW_RESULT);
     }
 
     public void selectDifficultyActivity(View view) {
         final Intent intent = new Intent(this, SelectDifficultyActivity.class);
-        startActivityForResult(intent, ActivityCode.SELECT_DIFFICULTY);
+        startActivityForResult(intent, ActivityCode.RQ_SELECT_DIFFICULTY);
     }
 
     private void createGameConfig(final Intent data) {
@@ -115,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(User.USER_HIGH_SCORE_EASY, user.getHighScoreEasy());
         intent.putExtra(User.USER_HIGH_SCORE_MEDIUM, user.getHighScoreMedium());
         intent.putExtra(User.USER_HIGH_SCORE_HARD, user.getHighScoreHard());
-        startActivityForResult(intent, ActivityCode.SHOW_HIGH_SCORE);
+        startActivityForResult(intent, ActivityCode.RQ_SHOW_HIGH_SCORE);
+    }
+
+    public void startUserActivity() {
+        final Intent intent = new Intent(this, UserActivity.class);
+        startActivityForResult(intent, ActivityCode.RQ_USER);
     }
 }

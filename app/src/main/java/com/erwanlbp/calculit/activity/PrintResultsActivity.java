@@ -7,13 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.erwanlbp.calculit.config.ActivityCode;
 import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
 
 public class PrintResultsActivity extends AppCompatActivity {
 
-    public static final int NEXT_LEVEL = 2;
-    public static final int BACK_HOME = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +48,12 @@ public class PrintResultsActivity extends AppCompatActivity {
 
     public void backHome(View view) {
         Intent intent = new Intent();
-        setResult(BACK_HOME, intent);
+        setResult(ActivityCode.RC_BACK_HOME, intent);
         finish();
     }
 
     public void nextLevel(View view) {
-        setResult(NEXT_LEVEL);
+        setResult(ActivityCode.RC_NEXT_LEVEL);
         finish();
     }
 }

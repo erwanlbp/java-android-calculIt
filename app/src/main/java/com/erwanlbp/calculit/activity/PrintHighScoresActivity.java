@@ -12,9 +12,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.model.User;
+import com.erwanlbp.calculit.model.User;
 
-public class PrintHighScore extends AppCompatActivity {
+public class PrintHighScoresActivity extends AppCompatActivity {
+
+    private int highScoreEasy;
+    private int highScoreMedium;
+    private int highScoreHard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +26,15 @@ public class PrintHighScore extends AppCompatActivity {
         setContentView(R.layout.activity_print_high_score);
 
         Intent intent = getIntent();
-        final String name = intent.getStringExtra(User.USER_NAME);
-        final int highScore = intent.getIntExtra(User.USER_HIGH_SCORE, 0);
+        final String name = intent.getStringExtra(User.USER_PSEUDO);
+        highScoreEasy = intent.getIntExtra(User.USER_HIGH_SCORE_EASY, 0);
+        highScoreMedium = intent.getIntExtra(User.USER_HIGH_SCORE_MEDIUM, 0);
+        highScoreHard = intent.getIntExtra(User.USER_HIGH_SCORE_HARD, 0);
+
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
 
         //TODO a changer : initGlobalHS();
-        initGlobalHS(name, highScore);
+        initGlobalHS(name, highScoreEasy);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

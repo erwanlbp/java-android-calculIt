@@ -7,15 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.erwanlbp.calculit.activity.config.GameConfig;
+import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
 
 public class PrintResultsActivity extends AppCompatActivity {
 
-    public static final String HIGHSCORE = MainActivity.APPNAME + "HIGH_SCORE";
     public static final int NEXT_LEVEL = 2;
     public static final int BACK_HOME = 3;
-    private int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +23,7 @@ public class PrintResultsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int correctResult = intent.getIntExtra(GameConfig.CONFIG_CORRECT_RESULT, 0);
         int userAnswer = intent.getIntExtra(AnswerActivity.USER_ANSWER, 0);
-        this.level = intent.getIntExtra(GameConfig.CONFIG_LEVEL, -1);
+        int level = intent.getIntExtra(GameConfig.CONFIG_LEVEL, -1);
 
         TextView tvResultAnswer = (TextView) findViewById(R.id.tvResultAnswer);
         if (correctResult == userAnswer)
@@ -40,7 +38,7 @@ public class PrintResultsActivity extends AppCompatActivity {
         tvCorrectResult.setText(String.valueOf(correctResult));
 
         TextView tvLevel = (TextView) findViewById(R.id.tvPrintResultLevelValue);
-        tvLevel.setText(String.valueOf(this.level));
+        tvLevel.setText(String.valueOf(level));
 
         if (correctResult != userAnswer) {
             Button buttonNextLevel = (Button) findViewById(R.id.button_print_results_next_level);
@@ -51,7 +49,6 @@ public class PrintResultsActivity extends AppCompatActivity {
 
     public void backHome(View view) {
         Intent intent = new Intent();
-        intent.putExtra(PrintResultsActivity.HIGHSCORE, this.level);
         setResult(BACK_HOME, intent);
         finish();
     }

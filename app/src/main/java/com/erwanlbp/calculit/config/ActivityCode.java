@@ -1,4 +1,4 @@
-package com.erwanlbp.calculit.activity.config;
+package com.erwanlbp.calculit.config;
 
 public class ActivityCode {
     private static int value = 1;

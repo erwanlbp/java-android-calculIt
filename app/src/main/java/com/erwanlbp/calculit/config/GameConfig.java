@@ -1,6 +1,6 @@
-package com.erwanlbp.calculit.activity.config;
+package com.erwanlbp.calculit.config;
 
-import com.erwanlbp.calculit.activity.enums.Difficulty;
+import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.activity.MainActivity;
 
 import java.util.ArrayList;

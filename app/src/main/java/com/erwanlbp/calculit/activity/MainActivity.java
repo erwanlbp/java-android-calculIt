@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.erwanlbp.calculit.activity.config.ActivityCode;
-import com.erwanlbp.calculit.activity.config.GameConfig;
+import com.erwanlbp.calculit.config.ActivityCode;
+import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.enums.Difficulty;
-import com.erwanlbp.calculit.activity.model.User;
+import com.erwanlbp.calculit.enums.Difficulty;
+import com.erwanlbp.calculit.model.User;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (this.gameConfig == null)
             this.gameConfig = new GameConfig();
-
-        System.out.println(this.user);
 
         Map<String, Integer> mapGameConfig = this.gameConfig.getParamsMap();
         ArrayList<Integer> numbers = this.gameConfig.getNumbers();
@@ -72,13 +70,17 @@ public class MainActivity extends AppCompatActivity {
                 gameConfig = gameConfig.nextLevel();
                 launchGame(null);
             }
-            if (resultCode == PrintResultsActivity.BACK_HOME)
-                this.user.setHighScore(data.getIntExtra(PrintResultsActivity.HIGHSCORE, 0));
-            gameConfig = new GameConfig(gameConfig.getDifficulty());
+            if (resultCode == PrintResultsActivity.BACK_HOME) {
+                // TODO Finished Play
+                // Finished playing, so last level is the current one
+                this.user.updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel());
+                // Reset game config
+                gameConfig = new GameConfig(gameConfig.getDifficulty());
+            }
         }
         if (requestCode == ActivityCode.INIT_USER) {
             if (resultCode == RESULT_OK) {
-                this.user = new User(data.getStringExtra(InitUserActivity.USER_INFO), 0);
+                this.user = new User(data.getStringExtra(InitUserActivity.USER_EMAIL), data.getStringExtra(InitUserActivity.USER_INFO), 0, 0, 0);
             }
         }
     }
@@ -108,9 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void printHighScore(View view) {
-        final Intent intent = new Intent(this, PrintHighScore.class);
-        intent.putExtra(User.USER_NAME, this.user.getName());
-        intent.putExtra(User.USER_HIGH_SCORE, this.user.getHighScore());
+        final Intent intent = new Intent(this, PrintHighScoresActivity.class);
         startActivityForResult(intent, ActivityCode.SHOW_HIGH_SCORE);
     }
 }

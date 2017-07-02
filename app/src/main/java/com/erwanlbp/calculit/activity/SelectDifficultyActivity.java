@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.enums.Difficulty;
+import com.erwanlbp.calculit.enums.Difficulty;
 
 public class SelectDifficultyActivity extends AppCompatActivity {
 
@@ -36,6 +36,7 @@ public class SelectDifficultyActivity extends AppCompatActivity {
                 break;
             default:
                 intent.putExtra(DIFFICULTY, Difficulty.EASY.getTimeToPrint());
+                break;
         }
 
         setResult(RESULT_OK, intent);

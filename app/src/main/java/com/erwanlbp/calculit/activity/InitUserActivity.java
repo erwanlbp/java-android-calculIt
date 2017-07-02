@@ -11,6 +11,7 @@ import com.erwanlbp.calculit.R;
 public class InitUserActivity extends AppCompatActivity {
 
     public static final String USER_INFO = MainActivity.APPNAME + "USER_INFO";
+    public static final String USER_EMAIL = MainActivity.APPNAME + "USER_EMAIL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

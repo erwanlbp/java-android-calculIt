@@ -1,7 +1,6 @@
 package com.erwanlbp.calculit.activity;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,7 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.erwanlbp.calculit.activity.config.GameConfig;
+import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
 
 import java.util.List;

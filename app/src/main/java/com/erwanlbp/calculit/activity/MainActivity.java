@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.erwanlbp.calculit.ActivityCode;
-import com.erwanlbp.calculit.GameConfig;
+import com.erwanlbp.calculit.config.ActivityCode;
+import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.activity.Enum.Difficulty;
+import com.erwanlbp.calculit.enums.Difficulty;
+import com.erwanlbp.calculit.model.User;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,11 +18,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String APPNAME = "com.erwanlbp.calculit";
     private GameConfig gameConfig;
+    private User user;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Intent intent = new Intent(this, InitUserActivity.class);
+        startActivityForResult(intent, ActivityCode.INIT_USER);
     }
 
     public void launchGame(View view) {
@@ -65,8 +70,18 @@ public class MainActivity extends AppCompatActivity {
                 gameConfig = gameConfig.nextLevel();
                 launchGame(null);
             }
-            if (resultCode == PrintResultsActivity.BACK_HOME)
+            if (resultCode == PrintResultsActivity.BACK_HOME) {
+                // TODO Finished Play
+                // Finished playing, so last level is the current one
+                this.user.updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel());
+                // Reset game config
                 gameConfig = new GameConfig(gameConfig.getDifficulty());
+            }
+        }
+        if (requestCode == ActivityCode.INIT_USER) {
+            if (resultCode == RESULT_OK) {
+                this.user = new User(data.getStringExtra(InitUserActivity.USER_EMAIL), data.getStringExtra(InitUserActivity.USER_INFO), 0, 0, 0);
+            }
         }
     }
 
@@ -92,5 +107,14 @@ public class MainActivity extends AppCompatActivity {
     private void createGameConfig(final Intent data) {
         final Difficulty difficulty = Difficulty.parse(data.getIntExtra(SelectDifficultyActivity.DIFFICULTY, Difficulty.EASY.getTimeToPrint()));
         gameConfig = new GameConfig(difficulty);
+    }
+
+    public void startPrintHighScores(View view) {
+        final Intent intent = new Intent(this, PrintHighScoresActivity.class);
+        intent.putExtra(User.USER_PSEUDO, user.getPseudo());
+        intent.putExtra(User.USER_HIGH_SCORE_EASY, user.getHighScoreEasy());
+        intent.putExtra(User.USER_HIGH_SCORE_MEDIUM, user.getHighScoreMedium());
+        intent.putExtra(User.USER_HIGH_SCORE_HARD, user.getHighScoreHard());
+        startActivityForResult(intent, ActivityCode.SHOW_HIGH_SCORE);
     }
 }

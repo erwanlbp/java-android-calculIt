@@ -33,7 +33,19 @@
         app:layout_constraintTop_toBottomOf="@id/tvAppName" />
 
     <Button
-        android:id="@+id/buttonDifficulty"
+        android:id="@+id/buttonHighScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="148dp"
+        android:background="@drawable/button_main_activity"
+        android:onClick="startPrintHighScores"
+        android:text="@string/high_score"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

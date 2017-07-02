@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.erwanlbp.calculit.GameConfig;
+import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
 
 public class PrintResultsActivity extends AppCompatActivity {
@@ -48,7 +48,8 @@ public class PrintResultsActivity extends AppCompatActivity {
     }
 
     public void backHome(View view) {
-        setResult(BACK_HOME);
+        Intent intent = new Intent();
+        setResult(BACK_HOME, intent);
         finish();
     }
 

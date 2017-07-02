@@ -1,6 +1,6 @@
-package com.erwanlbp.calculit;
+package com.erwanlbp.calculit.config;
 
-import com.erwanlbp.calculit.activity.Enum.Difficulty;
+import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.activity.MainActivity;
 
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ public class GameConfig {
     private ArrayList<Integer> numbers;
     public static final String CONFIG_NUMBERS = MainActivity.APPNAME + "CONFIG_NUMBERS";
 
-    private int size;
     public static final int CONFIG_DEFAULT_SIZE = 3;
 
     private int timeToPrint;
@@ -48,9 +47,8 @@ public class GameConfig {
     private GameConfig(final int size, final int maxNumber, Difficulty difficulty, int level) {
         this.maxNumber = maxNumber;
         this.level = level;
-        this.size = size;
         this.numbers = new ArrayList<>();
-        for (int i = 0; i < this.size; i++)
+        for (int i = 0; i < size; i++)
             this.numbers.add(generateRandomNumber(this.maxNumber));
         this.difficulty = difficulty;
         this.timeToPrint = this.difficulty.getTimeToPrint();

@@ -22,6 +22,8 @@
             android:windowSoftInputMode="stateVisible" />
         <activity android:name=".activity.SelectDifficultyActivity" />
         <activity android:name=".activity.PrintResultsActivity" />
+        <activity android:name=".activity.InitUserActivity" />
+        <activity android:name=".activity.PrintHighScoresActivity" />
     </application>
 
 </manifest>

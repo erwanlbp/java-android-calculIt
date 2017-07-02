@@ -94,7 +94,6 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = auth.getCurrentUser();
                             backHome(null);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -149,6 +148,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.disconnect_button:
                 removeAccess();
+                break;
+            default:
                 break;
         }
     }

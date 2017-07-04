@@ -53,10 +53,6 @@ public class User {
         return firebaseUser.getEmail();
     }
 
-    public void updateEmail(String email) {
-        firebaseUser.updateEmail(email);
-    }
-
     public Uri getPhotoURL() {
         return firebaseUser.getPhotoUrl();
     }

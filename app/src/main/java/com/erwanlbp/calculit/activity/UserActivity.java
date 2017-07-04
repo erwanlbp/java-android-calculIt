@@ -102,7 +102,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseDB.getFireBaseDB().getUserDatas();
-                            backHome(null);
+                            backHome();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(UserActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -189,13 +189,17 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         // Can't return home if not logged in
-        if (auth.getCurrentUser() == null) return;
+        if (auth.getCurrentUser() == null) {
+            this.finishAffinity();
+            return;
+        }
+
+        super.onBackPressed();
+        backHome();
     }
 
-    public void backHome(View view) {
-        setResult(auth.getCurrentUser() != null ? RC_LOGGED_IN : RC_NOT_LOGGED_IN);
+    public void backHome() {
         finish();
     }
 }

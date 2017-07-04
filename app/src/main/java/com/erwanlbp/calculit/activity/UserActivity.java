@@ -41,7 +41,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
-        findViewById(R.id.disconnect_button).setOnClickListener(this);
+        findViewById(R.id.remove_user_button).setOnClickListener(this);
         this.tvPseudo = (TextView) findViewById(R.id.tvAuthUserPseudo);
 
         // Configure Google Sign In
@@ -146,7 +146,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.sign_out_button:
                 signOut();
                 break;
-            case R.id.disconnect_button:
+            case R.id.remove_user_button:
                 removeAccess();
                 break;
             default:
@@ -162,7 +162,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.disconnect_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.remove_user_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
             tvPseudo.setText(user.getDisplayName());
         } else {
@@ -170,7 +170,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
             findViewById(R.id.button_user_back_home).setVisibility(View.GONE);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_button).setVisibility(View.GONE);
-            findViewById(R.id.disconnect_button).setVisibility(View.GONE);
+            findViewById(R.id.remove_user_button).setVisibility(View.GONE);
         }
     }
 

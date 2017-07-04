@@ -66,13 +66,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/disconnect_button"
+        android:id="@+id/remove_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_weight="1"
-        android:text="@string/disconnect"
+        android:text="@string/rage_quit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/sign_in_button"
         app:layout_constraintRight_toRightOf="parent"

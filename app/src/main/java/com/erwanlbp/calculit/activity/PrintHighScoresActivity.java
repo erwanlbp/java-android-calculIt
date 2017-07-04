@@ -57,15 +57,15 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);
         TableRow row = new TableRow(this);
 
-        TextView textViewName = new TextView(this);
-        textViewName.setGravity(Gravity.CENTER);
-        textViewName.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        TextView tvDifficulty = new TextView(this);
+        tvDifficulty.setGravity(Gravity.CENTER);
+        tvDifficulty.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
         TextView textViewHighScore = new TextView(this);
         textViewHighScore.setGravity(Gravity.CENTER);
         textViewHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
 
-        row.addView(textViewName);
+        row.addView(tvDifficulty);
         row.addView(textViewHighScore);
 
         tableLayout.addView(row);
@@ -73,17 +73,17 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         switch (difficulty) {
             case MEDIUM:
                 // Get data firebase high score Medium
-                textViewName.setText(Difficulty.MEDIUM.toString());
+                tvDifficulty.setText(Difficulty.MEDIUM.toString());
                 textViewHighScore.setText(String.valueOf(highScoreMedium));
                 break;
             case HARD:
                 // Get data firebase high score Hard
-                textViewName.setText(Difficulty.HARD.toString());
+                tvDifficulty.setText(Difficulty.HARD.toString());
                 textViewHighScore.setText(String.valueOf(highScoreHard));
                 break;
             default: // Case EASY
                 // Get data firebase high score Easy
-                textViewName.setText(Difficulty.EASY.toString());
+                tvDifficulty.setText(Difficulty.EASY.toString());
                 textViewHighScore.setText(String.valueOf(highScoreEasy));
                 break;
         }

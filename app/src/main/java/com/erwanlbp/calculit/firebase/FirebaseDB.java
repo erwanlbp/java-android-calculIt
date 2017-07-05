@@ -50,7 +50,6 @@ public class FirebaseDB {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User userInner = User.getInstance();
                 for (Difficulty difficulty : Difficulty.values()) {
-                    // TODO [CHECK] if that doesn't return a NullPointerException
                     Object highscore = dataSnapshot.child("highscore-" + difficulty.toString()).getValue();
                     if (highscore != null)
                         userInner.setHighScore(difficulty, (long) highscore);

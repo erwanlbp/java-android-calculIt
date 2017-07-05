@@ -122,15 +122,13 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean logUser() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null)
+            return false;
 
-        if (firebaseUser != null) {
-            User.getInstance().authentified(firebaseUser);
-            FirebaseDB.getFireBaseDB().getUserDatas();
-            // TODO [CHANGE] when scores are stored locally
+        User.getInstance().authentified(firebaseUser);
+        FirebaseDB.getFireBaseDB().getUserDatas();
+        // TODO [CHANGE] when scores are stored locally
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 }

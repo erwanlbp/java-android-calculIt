@@ -1,7 +1,7 @@
 package com.erwanlbp.calculit.activity;
 
 import android.content.Intent;
-import android.support.v4.util.Pair;
+import android.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;

@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String APPNAME = "com.erwanlbp.calculit";
     private GameConfig gameConfig;
-    private User user;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -71,8 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (resultCode == ActivityCode.RC_BACK_HOME) {
                 // TODO Finished Play
-                // Finished playing, so last level is the current one
-                this.user.updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel() - 1); // -1 Cause it mean he failed this level
+                User.getInstance().updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel() - 1); // -1 Cause it mean he failed this level
                 // Reset game config
                 gameConfig = new GameConfig(gameConfig.getDifficulty());
             }
@@ -126,12 +124,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
-            // Get user data from Firebase
             User.getInstance().authentified(firebaseUser);
             FirebaseDB.getFireBaseDB().getUserDatas();
             // TODO [CHANGE] when scores are stored locally
+
+            return true;
         }
 
-        return firebaseUser != null;
+        return false;
     }
 }

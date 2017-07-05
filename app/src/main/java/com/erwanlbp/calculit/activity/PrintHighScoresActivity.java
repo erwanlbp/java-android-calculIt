@@ -1,9 +1,8 @@
 package com.erwanlbp.calculit.activity;
 
-import android.content.Intent;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,13 +16,9 @@ import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.firebase.FirebaseDB;
 import com.erwanlbp.calculit.model.User;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PrintHighScoresActivity extends AppCompatActivity {
-
-    private Map<Difficulty, Integer> highscores;
 
     private TableLayout tableLayout;
 
@@ -31,9 +26,6 @@ public class PrintHighScoresActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_high_score);
-
-        Intent intent = getIntent();
-        highscores = new HashMap<>();
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
         tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);
@@ -73,7 +65,7 @@ public class PrintHighScoresActivity extends AppCompatActivity {
             TextView tvHighScore = new TextView(this);
             tvHighScore.setGravity(Gravity.CENTER);
             tvHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            tvHighScore.setText(String.valueOf(highscores.get(difficulty)));
+            tvHighScore.setText(String.valueOf(User.getInstance().getHighScore(difficulty)));
             row.addView(tvHighScore);
 
             tableLayout.addView(row);

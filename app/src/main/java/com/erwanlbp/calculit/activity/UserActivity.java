@@ -125,7 +125,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void removeAccess() {
-        FirebaseDB.getFireBaseDB().deleteAll(auth.getCurrentUser());
+        FirebaseDB.getFireBaseDB().deleteAll();
 
         // Firebase sign out
         auth.signOut();

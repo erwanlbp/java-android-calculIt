@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erwanlbp.calculit.R;
+import com.erwanlbp.calculit.firebase.FirebaseDB;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -124,6 +125,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void removeAccess() {
+        FirebaseDB.getFireBaseDB().deleteAll(auth.getCurrentUser());
+
         // Firebase sign out
         auth.signOut();
 

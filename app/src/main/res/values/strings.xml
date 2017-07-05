@@ -30,9 +30,11 @@
     <string name="high_score">High Score</string>
     <string name="sign_out">Sign out</string>
     <string name="rage_quit">Rage quit</string>
+    <string name="button_user_activity">Profile</string>
     <string-array name="high_score_spinner">
-        <item>Easy</item>
-        <item>Medium</item>
-        <item>Hard</item>
+        <item>Personal bests</item>
+        <item>Global Easy</item>
+        <item>Global Medium</item>
+        <item>Global Hard</item>
     </string-array>
 </resources>

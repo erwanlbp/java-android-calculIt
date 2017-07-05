@@ -19,23 +19,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <Spinner
+            android:id="@+id/spinnerHS"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="100"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <Spinner
-                android:id="@+id/spinnerHS"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="20"
-                android:animateLayoutChanges="false"
-                android:entries="@array/high_score_spinner" />
-        </LinearLayout>
+            android:animateLayoutChanges="false"
+            android:entries="@array/high_score_spinner" />
 
         <TableLayout
             android:id="@+id/tableLayoutHS"

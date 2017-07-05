@@ -1,97 +1,82 @@
 package com.erwanlbp.calculit.model;
 
-import com.erwanlbp.calculit.activity.MainActivity;
+import android.net.Uri;
+
 import com.erwanlbp.calculit.enums.Difficulty;
+import com.erwanlbp.calculit.firebase.FirebaseDB;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class User {
 
-    private String email;
+    // ----- Singleton -----
 
-    private String pseudo;
-    public static final String USER_PSEUDO = MainActivity.APPNAME + "USER_PSEUDO";
+    private static User user;
 
-    private int highScoreEasy;
-    public static final String USER_HIGH_SCORE_EASY = MainActivity.APPNAME + "USER_HIGH_SCORE_EASY";
-
-    private int highScoreMedium;
-    public static final String USER_HIGH_SCORE_MEDIUM = MainActivity.APPNAME + "USER_HIGH_SCORE_MEDIUM";
-
-    private int highScoreHard;
-    public static final String USER_HIGH_SCORE_HARD = MainActivity.APPNAME + "USER_HIGH_SCORE_HARD";
-
-    private boolean isAuthentified;
-
-    public User() {
+    private User() {
+        this.firebaseUser = null;
+        this.highscores = new HashMap<>();
     }
 
-    public User(String email, String pseudo, int highScoreEasy, int highScoreMedium, int highScoreHard) {
-        this.email = email;
-        this.pseudo = pseudo;
-        this.highScoreEasy = highScoreEasy;
-        this.highScoreMedium = highScoreMedium;
-        this.highScoreHard = highScoreHard;
-        this.isAuthentified = false;
+    public static User getInstance() {
+        if (user == null) {
+            user = new User();
+        }
+        return user;
     }
 
-    public String getPseudo() {
-        return pseudo;
-    }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
-    }
+    // ----- Fields -----
 
-    public int getHighScoreEasy() {
-        return highScoreEasy;
-    }
+    // FirebaseUser contains the id, name, email
+    private FirebaseUser firebaseUser;
 
-    public void setHighScoreEasy(int highScoreEasy) {
-        this.highScoreEasy = highScoreEasy;
-    }
-
-    public int getHighScoreMedium() {
-        return highScoreMedium;
-    }
-
-    public void setHighScoreMedium(int highScoreMedium) {
-        this.highScoreMedium = highScoreMedium;
-    }
-
-    public int getHighScoreHard() {
-        return highScoreHard;
-    }
-
-    public void setHighScoreHard(int highScoreHard) {
-        this.highScoreHard = highScoreHard;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void authentified(FirebaseUser firebaseUser) {
+        this.firebaseUser = firebaseUser;
     }
 
     public boolean isAuthentified() {
-        return isAuthentified;
+        return this.firebaseUser != null;
     }
 
-    public void authentify() {
-        this.isAuthentified = true;
+    public String getID() {
+        return firebaseUser.getUid();
+    }
+
+    public String getName() {
+        return firebaseUser.getDisplayName();
+    }
+
+    public String getEmail() {
+        return firebaseUser.getEmail();
+    }
+
+    public void updateEmail(String email) {
+        firebaseUser.updateEmail(email);
+    }
+
+    public Uri getPhotoURL() {
+        return firebaseUser.getPhotoUrl();
+    }
+
+
+    // highscores contains the highscore in every difficulty
+    private Map<Difficulty, Integer> highscores;
+
+    public int getHighScore(Difficulty difficulty) {
+        return this.highscores.get(difficulty);
+    }
+
+    private void setHighScore(Difficulty difficulty, int newScore) {
+        this.highscores.put(difficulty, newScore);
     }
 
     public boolean updateHighScore(Difficulty difficulty, int newScore) {
-        if (difficulty == Difficulty.EASY && this.highScoreEasy < newScore) {
-            this.highScoreEasy = newScore;
-            return true;
-        }
-        if (difficulty == Difficulty.MEDIUM && this.highScoreMedium < newScore) {
-            this.highScoreMedium = newScore;
-            return true;
-        }
-        if (difficulty == Difficulty.HARD && this.highScoreHard < newScore) {
-            this.highScoreHard = newScore;
+        if (getHighScore(difficulty) < newScore) {
+            setHighScore(difficulty, newScore);
+            FirebaseDB.getFireBaseDB().updateHighScore(this.firebaseUser.getUid(), difficulty, newScore);
             return true;
         }
         return false;

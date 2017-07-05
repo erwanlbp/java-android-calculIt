@@ -9,6 +9,7 @@ import com.erwanlbp.calculit.config.ActivityCode;
 import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.enums.Difficulty;
+import com.erwanlbp.calculit.firebase.FirebaseDB;
 import com.erwanlbp.calculit.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startUserActivity();
+        if (!logUser()) {
+            startUserActivity(null);
+        }
     }
 
     public void launchGame(View view) {
@@ -69,19 +72,18 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == ActivityCode.RC_BACK_HOME) {
                 // TODO Finished Play
                 // Finished playing, so last level is the current one
-                this.user.updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel());
+                this.user.updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel() - 1); // -1 Cause it mean he failed this level
                 // Reset game config
                 gameConfig = new GameConfig(gameConfig.getDifficulty());
             }
         }
         if (requestCode == ActivityCode.RQ_USER) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (resultCode == RESULT_OK && user != null) {
-                this.user = new User(user.getEmail(), user.getDisplayName(), 0, 0, 0);
+            if (resultCode == RESULT_OK) {
+                logUser();
             } else {
                 // We only deal with user connected
                 // TODO [IMPROVE] Allow user no to be authentified
-                startUserActivity();
+                startUserActivity(null);
             }
         }
     }
@@ -112,15 +114,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void startPrintHighScores(View view) {
         final Intent intent = new Intent(this, PrintHighScoresActivity.class);
-        intent.putExtra(User.USER_PSEUDO, user.getPseudo());
-        intent.putExtra(User.USER_HIGH_SCORE_EASY, user.getHighScoreEasy());
-        intent.putExtra(User.USER_HIGH_SCORE_MEDIUM, user.getHighScoreMedium());
-        intent.putExtra(User.USER_HIGH_SCORE_HARD, user.getHighScoreHard());
         startActivityForResult(intent, ActivityCode.RQ_SHOW_HIGH_SCORE);
     }
 
-    public void startUserActivity() {
+    public void startUserActivity(View view) {
         final Intent intent = new Intent(this, UserActivity.class);
         startActivityForResult(intent, ActivityCode.RQ_USER);
+    }
+
+    public boolean logUser() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (firebaseUser != null) {
+            // Get user data from Firebase
+            User.getInstance().authentified(firebaseUser);
+            FirebaseDB.getFireBaseDB().getUserDatas();
+            // TODO [CHANGE] when scores are stored locally
+        }
+
+        return firebaseUser != null;
     }
 }

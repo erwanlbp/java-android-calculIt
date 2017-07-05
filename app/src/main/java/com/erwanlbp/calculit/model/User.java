@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class User {
 
     private FirebaseUser firebaseUser;
+    public static final String USER_NAME = MainActivity.APPNAME + "USER_NAME";
 
     private int highScoreEasy;
     public static final String USER_HIGH_SCORE_EASY = MainActivity.APPNAME + "USER_HIGH_SCORE_EASY";

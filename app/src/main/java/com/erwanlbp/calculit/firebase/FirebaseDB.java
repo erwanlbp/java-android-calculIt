@@ -1,5 +1,6 @@
 package com.erwanlbp.calculit.firebase;
 
+import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.erwanlbp.calculit.enums.Difficulty;
@@ -11,7 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FirebaseDB {
@@ -66,7 +69,7 @@ public class FirebaseDB {
     public void updateHighScore(String userID, Difficulty difficulty, int newScore) {
         Map<String, Object> highScoreUpdates = new HashMap<>();
         highScoreUpdates.put("/users/" + userID + "/highscore-" + difficulty.toString(), newScore);
-        // Other path where high score is ...
+//        highScoreUpdates.put("/highscore-"+difficulty.toString()+"/") // Use push()
         this.database.updateChildren(highScoreUpdates);
     }
 
@@ -75,5 +78,32 @@ public class FirebaseDB {
             return;
         }
         this.usersReference.child(user.getUid()).removeValue();
+    }
+
+    public List<Pair<String, Integer>> getHighScores(Difficulty difficulty) {
+//        List<Pair<String, Integer>> highscores = new ArrayList<>();
+//
+//        FirebaseDatabase.getInstance().getReference("highscore-"+difficulty.toString())
+//
+//
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Log.i(TAG, "Get user " + firebaseUser.getUid());
+//                        User user = dataSnapshot.getValue(User.class);
+//                        if (user != null) {
+//                            highscores[0] = user.getHighScoreEasy();
+//                            highscores[1] = user.getHighScoreMedium();
+//                            highscores[2] = user.getHighScoreHard();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//                        Log.w(TAG, "Failed getting user " + firebaseUser.getUid());
+//                    }
+//                });
+
+        return null;
     }
 }

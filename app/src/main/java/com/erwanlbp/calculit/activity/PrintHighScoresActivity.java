@@ -1,6 +1,7 @@
 package com.erwanlbp.calculit.activity;
 
 import android.content.Intent;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,13 +14,18 @@ import android.widget.TextView;
 
 import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.enums.Difficulty;
+import com.erwanlbp.calculit.firebase.FirebaseDB;
 import com.erwanlbp.calculit.model.User;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PrintHighScoresActivity extends AppCompatActivity {
 
-    private int highScoreEasy;
-    private int highScoreMedium;
-    private int highScoreHard;
+    private Map<Difficulty, Integer> highscores;
+
+    private TableLayout tableLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,65 +33,76 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_print_high_score);
 
         Intent intent = getIntent();
-        // TODO Do something with the pseudo
-//        String pseudo = intent.getStringExtra(User.USER_PSEUDO);
-        highScoreEasy = intent.getIntExtra(User.USER_HIGH_SCORE_EASY, 0);
-        highScoreMedium = intent.getIntExtra(User.USER_HIGH_SCORE_MEDIUM, 0);
-        highScoreHard = intent.getIntExtra(User.USER_HIGH_SCORE_HARD, 0);
+        highscores = new HashMap<>();
+        highscores.put(Difficulty.EASY, intent.getIntExtra(User.USER_HIGH_SCORE_EASY, 0));
+        highscores.put(Difficulty.EASY, intent.getIntExtra(User.USER_HIGH_SCORE_MEDIUM, 0));
+        highscores.put(Difficulty.EASY, intent.getIntExtra(User.USER_HIGH_SCORE_HARD, 0));
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
+        tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);
 
-        //TODO a changer : initGlobalHS();
-        changeHighScore(Difficulty.EASY);
+        showPersonnalHighScores();
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 final String difficultyStr = spinner.getSelectedItem().toString();
-                final Difficulty difficulty = Difficulty.parse(difficultyStr);
-                changeHighScore(difficulty);
+                try {
+                    final Difficulty difficulty = Difficulty.parse(difficultyStr);
+                    showGlobalHighScores(difficulty);
+                } catch (IllegalArgumentException iae) {
+                    showPersonnalHighScores();
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                //TODO to improve
+                showPersonnalHighScores();
             }
         });
     }
 
-    private void changeHighScore(Difficulty difficulty) {
-        TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);
-        TableRow row = new TableRow(this);
+    private void showPersonnalHighScores() {
+        tableLayout.removeAllViewsInLayout();
+        for (Difficulty difficulty : Difficulty.values()) {
+            TableRow row = new TableRow(this);
 
-        TextView tvDifficulty = new TextView(this);
-        tvDifficulty.setGravity(Gravity.CENTER);
-        tvDifficulty.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            TextView tvDifficulty = new TextView(this);
+            tvDifficulty.setGravity(Gravity.CENTER);
+            tvDifficulty.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            tvDifficulty.setText(difficulty.toString());
+            row.addView(tvDifficulty);
 
-        TextView textViewHighScore = new TextView(this);
-        textViewHighScore.setGravity(Gravity.CENTER);
-        textViewHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            TextView tvHighScore = new TextView(this);
+            tvHighScore.setGravity(Gravity.CENTER);
+            tvHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            tvHighScore.setText(String.valueOf(highscores.get(difficulty)));
+            row.addView(tvHighScore);
 
-        row.addView(tvDifficulty);
-        row.addView(textViewHighScore);
+            tableLayout.addView(row);
+        }
+    }
 
-        tableLayout.addView(row);
+    private void showGlobalHighScores(Difficulty difficulty) {
+        List<Pair<String, Integer>> highscores = FirebaseDB.getFireBaseDB().getHighScores(difficulty);
 
-        switch (difficulty) {
-            case MEDIUM:
-                // Get data firebase high score Medium
-                tvDifficulty.setText(Difficulty.MEDIUM.toString());
-                textViewHighScore.setText(String.valueOf(highScoreMedium));
-                break;
-            case HARD:
-                // Get data firebase high score Hard
-                tvDifficulty.setText(Difficulty.HARD.toString());
-                textViewHighScore.setText(String.valueOf(highScoreHard));
-                break;
-            default: // Case EASY
-                // Get data firebase high score Easy
-                tvDifficulty.setText(Difficulty.EASY.toString());
-                textViewHighScore.setText(String.valueOf(highScoreEasy));
-                break;
+        tableLayout.removeAllViewsInLayout();
+        for (Pair<String, Integer> highScore : highscores) {
+            TableRow row = new TableRow(this);
+
+            TextView tvName = new TextView(this);
+            tvName.setGravity(Gravity.CENTER);
+            tvName.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            tvName.setText(highScore.first);
+            row.addView(tvName);
+
+            TextView tvHighScore = new TextView(this);
+            tvHighScore.setGravity(Gravity.CENTER);
+            tvHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+            tvHighScore.setText(String.valueOf(highScore.second));
+            row.addView(tvHighScore);
+
+            tableLayout.addView(row);
         }
     }
 }

@@ -5,26 +5,20 @@ import android.util.Pair;
 
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.model.User;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class FirebaseDB {
 
-    private static final String TAG = "FirebaseDB";
-
+    // ----- Singleton -----
     private static FirebaseDB firebaseDB;
-
-    private DatabaseReference database;
-    private DatabaseReference usersReference;
 
     private FirebaseDB() {
         this.database = FirebaseDatabase.getInstance().getReference();
@@ -37,6 +31,13 @@ public class FirebaseDB {
         }
         return firebaseDB;
     }
+    // ----- Singleton end -----
+
+
+    private static final String TAG = "FirebaseDB";
+
+    private DatabaseReference database;
+    private DatabaseReference usersReference;
 
     public void getUserDatas() {
         User user = User.getInstance();
@@ -44,35 +45,47 @@ public class FirebaseDB {
             return;
         }
 
-        usersReference.child(user.getID())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        User userInner = User.getInstance();
-                        Log.i(TAG, "Get user " + userInner.getID());
+        usersReference.child(user.getID()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User userInner = User.getInstance();
+                for (Difficulty difficulty : Difficulty.values()) {
+                    // TODO [CHECK] if that doesn't return a NullPointerException
+                    Object highscore = dataSnapshot.child("highscore-" + difficulty.toString()).getValue();
+                    if (highscore != null)
+                        userInner.setHighScore(difficulty, (long) highscore);
+                }
+                Log.i(TAG, "Get user " + userInner.getID());
+            }
 
-                        // TODO Get datas...
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Cancelled getUserDatas");
+            }
+        });
     }
 
-    public void updateHighScore(String userID, Difficulty difficulty, int newScore) {
-        // TODO Get ID from Singleton
+    public void updateHighScore(Difficulty difficulty, long newScore) {
+        User user = User.getInstance();
+        // Only authentified user can save highscores
+        if (!user.isAuthentified())
+            return;
+
         Map<String, Object> highScoreUpdates = new HashMap<>();
-        highScoreUpdates.put("/users/" + userID + "/highscore-" + difficulty.toString(), newScore);
-//        highScoreUpdates.put("/highscore-"+difficulty.toString()+"/") // Use push()
+        highScoreUpdates.put("/users/" + user.getID() + "/highscore-" + difficulty.toString(), newScore);
+        highScoreUpdates.put("/highscores-" + difficulty.toString() + "/" + user.getID() + "/name", user.getName());
+        highScoreUpdates.put("/highscores-" + difficulty.toString() + "/" + user.getID() + "/score", newScore);
         this.database.updateChildren(highScoreUpdates);
     }
 
-    public void deleteAll(FirebaseUser user) {
-        if (user == null) {
+    public void deleteAll() {
+        User user = User.getInstance();
+        if (!user.isAuthentified())
             return;
-        }
-        this.usersReference.child(user.getUid()).removeValue();
+
+        this.usersReference.child(user.getID()).removeValue();
+        for (Difficulty difficulty : Difficulty.values())
+            this.database.child("highscores-" + difficulty.toString()).child(user.getID()).removeValue();
     }
 
     public List<Pair<String, Integer>> getHighScores(Difficulty difficulty) {

@@ -12,12 +12,13 @@ import java.util.Map;
 public class User {
 
     // ----- Singleton -----
-
     private static User user;
 
     private User() {
         this.firebaseUser = null;
         this.highscores = new HashMap<>();
+        for(Difficulty difficulty : Difficulty.values())
+            highscores.put(difficulty, 0L);
     }
 
     public static User getInstance() {
@@ -26,14 +27,14 @@ public class User {
         }
         return user;
     }
+    // ----- Singleton end -----
 
-
-    // ----- Fields -----
 
     // FirebaseUser contains the id, name, email
     private FirebaseUser firebaseUser;
 
     public void authentified(FirebaseUser firebaseUser) {
+        // TODO [MAYBE] Mettre le Firebase.getUserDatas ici ?
         this.firebaseUser = firebaseUser;
     }
 
@@ -42,37 +43,37 @@ public class User {
     }
 
     public String getID() {
-        return firebaseUser.getUid();
+        return isAuthentified() ? firebaseUser.getUid() : "";
     }
 
     public String getName() {
-        return firebaseUser.getDisplayName();
+        return isAuthentified() ? firebaseUser.getDisplayName() : "";
     }
 
     public String getEmail() {
-        return firebaseUser.getEmail();
+        return isAuthentified() ? firebaseUser.getEmail() : "";
     }
 
     public Uri getPhotoURL() {
-        return firebaseUser.getPhotoUrl();
+        return isAuthentified() ? firebaseUser.getPhotoUrl() : null;
     }
 
 
     // highscores contains the highscore in every difficulty
-    private Map<Difficulty, Integer> highscores;
+    private Map<Difficulty, Long> highscores;
 
-    public int getHighScore(Difficulty difficulty) {
+    public long getHighScore(Difficulty difficulty) {
         return this.highscores.get(difficulty);
     }
 
-    private void setHighScore(Difficulty difficulty, int newScore) {
+    public void setHighScore(Difficulty difficulty, long newScore) {
         this.highscores.put(difficulty, newScore);
     }
 
-    public boolean updateHighScore(Difficulty difficulty, int newScore) {
+    public boolean updateHighScore(Difficulty difficulty, long newScore) {
         if (getHighScore(difficulty) < newScore) {
             setHighScore(difficulty, newScore);
-            FirebaseDB.getFireBaseDB().updateHighScore(this.firebaseUser.getUid(), difficulty, newScore);
+            FirebaseDB.getFireBaseDB().updateHighScore(difficulty, newScore);
             return true;
         }
         return false;

@@ -34,9 +34,6 @@ public class PrintHighScoresActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         highscores = new HashMap<>();
-        highscores.put(Difficulty.EASY, intent.getIntExtra(User.USER_HIGH_SCORE_EASY, 0));
-        highscores.put(Difficulty.EASY, intent.getIntExtra(User.USER_HIGH_SCORE_MEDIUM, 0));
-        highscores.put(Difficulty.EASY, intent.getIntExtra(User.USER_HIGH_SCORE_HARD, 0));
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
         tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);

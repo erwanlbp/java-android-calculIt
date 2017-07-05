@@ -2,71 +2,51 @@ package com.erwanlbp.calculit.model;
 
 import android.net.Uri;
 
-import com.erwanlbp.calculit.activity.MainActivity;
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.firebase.FirebaseDB;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class User {
 
-    private FirebaseUser firebaseUser;
-    public static final String USER_NAME = MainActivity.APPNAME + "USER_NAME";
+    // ----- Singleton -----
 
-    private int highScoreEasy;
-    public static final String USER_HIGH_SCORE_EASY = MainActivity.APPNAME + "USER_HIGH_SCORE_EASY";
+    private static User user;
 
-    private int highScoreMedium;
-    public static final String USER_HIGH_SCORE_MEDIUM = MainActivity.APPNAME + "USER_HIGH_SCORE_MEDIUM";
-
-    private int highScoreHard;
-    public static final String USER_HIGH_SCORE_HARD = MainActivity.APPNAME + "USER_HIGH_SCORE_HARD";
-
-    public User() {
-        this(null, 0, 0, 0);
+    private User() {
+        this.firebaseUser = null;
+        this.highscores = new HashMap<>();
     }
 
-    public User(FirebaseUser firebaseUser, int highScoreEasy, int highScoreMedium, int highScoreHard) {
+    public static User getInstance() {
+        if (user == null) {
+            user = new User();
+        }
+        return user;
+    }
+
+
+    // ----- Fields -----
+
+    // FirebaseUser contains the id, name, email
+    private FirebaseUser firebaseUser;
+
+    public void authentified(FirebaseUser firebaseUser) {
         this.firebaseUser = firebaseUser;
-        this.highScoreEasy = highScoreEasy;
-        this.highScoreMedium = highScoreMedium;
-        this.highScoreHard = highScoreHard;
+    }
+
+    public boolean isAuthentified() {
+        return this.firebaseUser != null;
+    }
+
+    public String getID() {
+        return firebaseUser.getUid();
     }
 
     public String getName() {
         return firebaseUser.getDisplayName();
-    }
-
-    public int getHighScore(Difficulty difficulty) {
-        if (difficulty == Difficulty.EASY)
-            return getHighScoreEasy();
-        if (difficulty == Difficulty.MEDIUM)
-            return getHighScoreMedium();
-        if (difficulty == Difficulty.HARD)
-            return getHighScoreHard();
-        return -1;
-    }
-
-    private void setHighScore(Difficulty difficulty, int newScore) {
-        if (difficulty == Difficulty.EASY)
-            this.highScoreEasy = newScore;
-        if (difficulty == Difficulty.MEDIUM)
-            this.highScoreMedium = newScore;
-        if (difficulty == Difficulty.HARD)
-            this.highScoreHard = newScore;
-    }
-
-    public int getHighScoreEasy() {
-        return highScoreEasy;
-    }
-
-
-    public int getHighScoreMedium() {
-        return highScoreMedium;
-    }
-
-
-    public int getHighScoreHard() {
-        return highScoreHard;
     }
 
     public String getEmail() {
@@ -79,6 +59,18 @@ public class User {
 
     public Uri getPhotoURL() {
         return firebaseUser.getPhotoUrl();
+    }
+
+
+    // highscores contains the highscore in every difficulty
+    private Map<Difficulty, Integer> highscores;
+
+    public int getHighScore(Difficulty difficulty) {
+        return this.highscores.get(difficulty);
+    }
+
+    private void setHighScore(Difficulty difficulty, int newScore) {
+        this.highscores.put(difficulty, newScore);
     }
 
     public boolean updateHighScore(Difficulty difficulty, int newScore) {

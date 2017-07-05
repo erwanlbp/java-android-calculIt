@@ -38,35 +38,31 @@ public class FirebaseDB {
         return firebaseDB;
     }
 
-    public User getUserDatas(final FirebaseUser firebaseUser) {
-        if (firebaseUser == null) {
-            return new User();
+    public void getUserDatas() {
+        User user = User.getInstance();
+        if (!user.isAuthentified()) {
+            return;
         }
 
         final int[] highscores = {0, 0, 0};
-        usersReference.child(firebaseUser.getUid())
+        usersReference.child(user.getID())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.i(TAG, "Get user " + firebaseUser.getUid());
-                        User user = dataSnapshot.getValue(User.class);
-                        if (user != null) {
-                            highscores[0] = user.getHighScoreEasy();
-                            highscores[1] = user.getHighScoreMedium();
-                            highscores[2] = user.getHighScoreHard();
-                        }
+                        User userInner = User.getInstance();
+                        Log.i(TAG, "Get user " + userInner.getID());
+
+                        // TODO Get datas...
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w(TAG, "Failed getting user " + firebaseUser.getUid());
                     }
                 });
-
-        return new User(firebaseUser, highscores[0], highscores[1], highscores[2]);
     }
 
     public void updateHighScore(String userID, Difficulty difficulty, int newScore) {
+        // TODO Get ID from Singleton
         Map<String, Object> highScoreUpdates = new HashMap<>();
         highScoreUpdates.put("/users/" + userID + "/highscore-" + difficulty.toString(), newScore);
 //        highScoreUpdates.put("/highscore-"+difficulty.toString()+"/") // Use push()

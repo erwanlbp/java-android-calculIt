@@ -114,9 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void startPrintHighScores(View view) {
         final Intent intent = new Intent(this, PrintHighScoresActivity.class);
-        intent.putExtra(User.USER_HIGH_SCORE_EASY, user.getHighScoreEasy());
-        intent.putExtra(User.USER_HIGH_SCORE_MEDIUM, user.getHighScoreMedium());
-        intent.putExtra(User.USER_HIGH_SCORE_HARD, user.getHighScoreHard());
         startActivityForResult(intent, ActivityCode.RQ_SHOW_HIGH_SCORE);
     }
 
@@ -130,10 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (firebaseUser != null) {
             // Get user data from Firebase
-            this.user = FirebaseDB.getFireBaseDB().getUserDatas(firebaseUser);
+            User.getInstance().authentified(firebaseUser);
+            FirebaseDB.getFireBaseDB().getUserDatas();
             // TODO [CHANGE] when scores are stored locally
-        } else {
-            this.user = new User();
         }
 
         return firebaseUser != null;

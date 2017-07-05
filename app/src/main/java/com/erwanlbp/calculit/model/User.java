@@ -17,7 +17,7 @@ public class User {
     private User() {
         this.firebaseUser = null;
         this.highscores = new HashMap<>();
-        for(Difficulty difficulty : Difficulty.values())
+        for (Difficulty difficulty : Difficulty.values())
             highscores.put(difficulty, 0L);
     }
 

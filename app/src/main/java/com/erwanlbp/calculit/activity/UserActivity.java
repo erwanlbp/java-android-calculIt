@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +83,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 firebaseAuthWithGoogle(acct);
             } else {
                 // Signed out, show unauthenticated UI.
+                Log.e("UserActivity","ERROR LOGIN");
                 updateUI(null);
             }
         }

@@ -31,6 +31,7 @@
     <string name="sign_out">Sign out</string>
     <string name="rage_quit">Rage quit</string>
     <string name="button_user_activity">Profile</string>
+    <string name="continue_game">Continue</string>
     <string-array name="high_score_spinner">
         <item>Personal bests</item>
         <item>Global Easy</item>

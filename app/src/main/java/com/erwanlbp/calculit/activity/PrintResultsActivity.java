@@ -1,6 +1,8 @@
 package com.erwanlbp.calculit.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,9 +12,15 @@ import android.widget.TextView;
 import com.erwanlbp.calculit.config.ActivityCode;
 import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
+import com.erwanlbp.calculit.enums.Difficulty;
+import com.erwanlbp.calculit.model.User;
+
+import static com.erwanlbp.calculit.enums.Difficulty.EASY;
 
 public class PrintResultsActivity extends AppCompatActivity {
 
+    private boolean correctAnswer;
+    public static final String CORRECT_ANSWER = MainActivity.APPNAME + "CORRECT_ANSWER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +28,10 @@ public class PrintResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_print_results);
 
         Intent intent = getIntent();
-        int correctResult = intent.getIntExtra(GameConfig.CONFIG_CORRECT_RESULT, 0);
-        int userAnswer = intent.getIntExtra(AnswerActivity.USER_ANSWER, 0);
-        int level = intent.getIntExtra(GameConfig.CONFIG_LEVEL, -1);
+        final int correctResult = intent.getIntExtra(GameConfig.CONFIG_CORRECT_RESULT, 0);
+        final int userAnswer = intent.getIntExtra(AnswerActivity.USER_ANSWER, 0);
+        final int level = intent.getIntExtra(GameConfig.CONFIG_LEVEL, -1);
+        final String difficulty = intent.getStringExtra(GameConfig.CONFIG_DIFFICULTY);
 
         TextView tvResultAnswer = (TextView) findViewById(R.id.tvResultAnswer);
         if (correctResult == userAnswer)
@@ -42,12 +51,21 @@ public class PrintResultsActivity extends AppCompatActivity {
         if (correctResult != userAnswer) {
             Button buttonNextLevel = (Button) findViewById(R.id.button_print_results_next_level);
             buttonNextLevel.setEnabled(false);
+            correctAnswer = false;
+        } else {
+            final User user = User.getInstance();
+            SharedPreferences sharedPreferences = this.getSharedPreferences(MainActivity.SAVE_FILE, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt(user.getID() + "/highScore", level + 1);
+            editor.putString(user.getID() + "/difficulty", difficulty);
+            editor.apply();
+            correctAnswer = true;
         }
-
     }
 
     public void backHome(View view) {
         Intent intent = new Intent();
+        intent.putExtra(CORRECT_ANSWER, correctAnswer);
         setResult(ActivityCode.RC_BACK_HOME, intent);
         finish();
     }

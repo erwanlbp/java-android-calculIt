@@ -10,3 +10,4 @@
 .idea/
 
 Dockerfile
+keystore.properties

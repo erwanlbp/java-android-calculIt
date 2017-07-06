@@ -1,7 +1,6 @@
 package com.erwanlbp.calculit.firebase;
 
 import android.util.Log;
-import android.util.Pair;
 
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.model.User;
@@ -12,17 +11,33 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FirebaseDB {
+
+    private static final String TAG = "FirebaseDB";
+
+    // ----- Firebase paths -----
+
+    // -- HIGHSCORES --
+    public static final String HIGHSCORES = "highscores-";
+    public static final String HIGHSCORES_SCORE = "score";
+    public static final String HIGHSCORES_NAME = "name";
+
+    // -- USER --
+    public static final String USERS = "users";
+    public static final String USER_HIGHSCORE = "highscore-";
+
+
+    private DatabaseReference database;
+    private DatabaseReference usersReference;
 
     // ----- Singleton -----
     private static FirebaseDB firebaseDB;
 
     private FirebaseDB() {
         this.database = FirebaseDatabase.getInstance().getReference();
-        this.usersReference = FirebaseDatabase.getInstance().getReference("users");
+        this.usersReference = FirebaseDatabase.getInstance().getReference(USERS);
     }
 
     public static FirebaseDB getFireBaseDB() {
@@ -33,11 +48,6 @@ public class FirebaseDB {
     }
     // ----- Singleton end -----
 
-
-    private static final String TAG = "FirebaseDB";
-
-    private DatabaseReference database;
-    private DatabaseReference usersReference;
 
     public void getUserDatas() {
         User user = User.getInstance();
@@ -50,7 +60,7 @@ public class FirebaseDB {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User userInner = User.getInstance();
                 for (Difficulty difficulty : Difficulty.values()) {
-                    Object highscore = dataSnapshot.child("highscore-" + difficulty.toString()).getValue();
+                    Object highscore = dataSnapshot.child(USER_HIGHSCORE + difficulty.toString()).getValue();
                     if (highscore != null)
                         userInner.setHighScore(difficulty, (long) highscore);
                 }
@@ -71,10 +81,12 @@ public class FirebaseDB {
             return;
 
         Map<String, Object> highScoreUpdates = new HashMap<>();
-        highScoreUpdates.put("/users/" + user.getID() + "/highscore-" + difficulty.toString(), newScore);
-        highScoreUpdates.put("/highscores-" + difficulty.toString() + "/" + user.getID() + "/name", user.getName());
-        highScoreUpdates.put("/highscores-" + difficulty.toString() + "/" + user.getID() + "/score", newScore);
+        highScoreUpdates.put("/" + USERS + "/" + user.getID() + "/" + USER_HIGHSCORE + difficulty.toString(), newScore);
+        highScoreUpdates.put("/" + HIGHSCORES + difficulty.toString() + "/" + user.getID() + "/" + HIGHSCORES_NAME, user.getName());
+        highScoreUpdates.put("/" + HIGHSCORES + difficulty.toString() + "/" + user.getID() + "/" + HIGHSCORES_SCORE, newScore);
         this.database.updateChildren(highScoreUpdates);
+        // Order the highscores by the scores
+        this.database.child(HIGHSCORES+difficulty.toString()).child(user.getID()).setPriority(newScore);
     }
 
     public void deleteAll() {
@@ -84,33 +96,6 @@ public class FirebaseDB {
 
         this.usersReference.child(user.getID()).removeValue();
         for (Difficulty difficulty : Difficulty.values())
-            this.database.child("highscores-" + difficulty.toString()).child(user.getID()).removeValue();
-    }
-
-    public List<Pair<String, Integer>> getHighScores(Difficulty difficulty) {
-//        List<Pair<String, Integer>> highscores = new ArrayList<>();
-//
-//        FirebaseDatabase.getInstance().getReference("highscore-"+difficulty.toString())
-//
-//
-//                .addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        Log.i(TAG, "Get user " + firebaseUser.getUid());
-//                        User user = dataSnapshot.getValue(User.class);
-//                        if (user != null) {
-//                            highscores[0] = user.getHighScoreEasy();
-//                            highscores[1] = user.getHighScoreMedium();
-//                            highscores[2] = user.getHighScoreHard();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//                        Log.w(TAG, "Failed getting user " + firebaseUser.getUid());
-//                    }
-//                });
-
-        return null;
+            this.database.child(HIGHSCORES + difficulty.toString()).child(user.getID()).removeValue();
     }
 }

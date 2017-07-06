@@ -42,6 +42,10 @@ public class User {
         return this.firebaseUser != null;
     }
 
+    public void disconnect() {
+        user = new User();
+    }
+
     public String getID() {
         return isAuthentified() ? firebaseUser.getUid() : "";
     }

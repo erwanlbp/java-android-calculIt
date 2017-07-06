@@ -2,7 +2,7 @@ package com.erwanlbp.calculit.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,11 +15,13 @@ import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.firebase.FirebaseDB;
 import com.erwanlbp.calculit.model.User;
-
-import java.util.List;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class PrintHighScoresActivity extends AppCompatActivity {
-
+    private static final String TAG = "PrintHighScoresActivity";
     private TableLayout tableLayout;
 
     @Override
@@ -35,13 +37,17 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                final String difficultyStr = spinner.getSelectedItem().toString();
-                try {
-                    final Difficulty difficulty = Difficulty.parse(difficultyStr);
-                    showGlobalHighScores(difficulty);
-                } catch (IllegalArgumentException iae) {
-                    showPersonnalHighScores();
+                int selectedIndex = spinner.getSelectedItemPosition();
+                if (selectedIndex > 0) {
+                    try {
+                        final Difficulty difficulty = Difficulty.values()[selectedIndex - 1];
+                        showGlobalHighScores(difficulty);
+                        return;
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error selecting index");
+                    }
                 }
+                showPersonnalHighScores();
             }
 
             @Override
@@ -53,6 +59,7 @@ public class PrintHighScoresActivity extends AppCompatActivity {
 
     private void showPersonnalHighScores() {
         tableLayout.removeAllViewsInLayout();
+        Log.i(TAG, "showPersonnalHighscores");
         for (Difficulty difficulty : Difficulty.values()) {
             TableRow row = new TableRow(this);
 
@@ -72,26 +79,39 @@ public class PrintHighScoresActivity extends AppCompatActivity {
         }
     }
 
-    private void showGlobalHighScores(Difficulty difficulty) {
-        List<Pair<String, Integer>> highscores = FirebaseDB.getFireBaseDB().getHighScores(difficulty);
-
+    private void showGlobalHighScores(final Difficulty difficulty) {
         tableLayout.removeAllViewsInLayout();
-        for (Pair<String, Integer> highScore : highscores) {
-            TableRow row = new TableRow(this);
+        Log.i(TAG, "showGlobalHighscores for " + difficulty.toString());
 
-            TextView tvName = new TextView(this);
-            tvName.setGravity(Gravity.CENTER);
-            tvName.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            tvName.setText(highScore.first);
-            row.addView(tvName);
+        FirebaseDatabase.getInstance().getReference(FirebaseDB.HIGHSCORES + difficulty.toString()).limitToLast(100).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tableLayout.removeAllViewsInLayout();
+                for (DataSnapshot userHighScore : dataSnapshot.getChildren()) {
+                    TableRow row = new TableRow(PrintHighScoresActivity.this);
 
-            TextView tvHighScore = new TextView(this);
-            tvHighScore.setGravity(Gravity.CENTER);
-            tvHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
-            tvHighScore.setText(String.valueOf(highScore.second));
-            row.addView(tvHighScore);
+                    TextView tvName = new TextView(PrintHighScoresActivity.this);
+                    tvName.setGravity(Gravity.CENTER);
+                    tvName.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                    tvName.setText(String.valueOf(userHighScore.child(FirebaseDB.HIGHSCORES_NAME).getValue()));
+                    row.addView(tvName);
 
-            tableLayout.addView(row);
-        }
+                    TextView tvHighScore = new TextView(PrintHighScoresActivity.this);
+                    tvHighScore.setGravity(Gravity.CENTER);
+                    tvHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+                    tvHighScore.setText(String.valueOf(userHighScore.child(FirebaseDB.HIGHSCORES_SCORE).getValue()));
+                    row.addView(tvHighScore);
+
+                    tableLayout.addView(row);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w(TAG, "Failed show highscores-" + difficulty.toString());
+            }
+        });
+
+
     }
 }

@@ -86,6 +86,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 // Signed out, show unauthenticated UI.
                 User.getInstance().disconnect();
                 Log.e("UserActivity","ERROR LOGIN");
+                updateUI(null);
             }
         }
     }

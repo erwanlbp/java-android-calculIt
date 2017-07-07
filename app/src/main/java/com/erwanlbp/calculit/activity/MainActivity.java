@@ -1,9 +1,12 @@
 package com.erwanlbp.calculit.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.erwanlbp.calculit.config.ActivityCode;
 import com.erwanlbp.calculit.config.GameConfig;
@@ -20,6 +23,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     public static final String APPNAME = "com.erwanlbp.calculit";
+    public static final String SAVE_FILE = APPNAME + "SAVE_FILE";
     private GameConfig gameConfig;
 
     @Override
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         if (!logUser()) {
             startUserActivity(null);
         }
+
+        updateUI(loadSaveFile());
     }
 
     public void launchGame(View view) {
@@ -71,8 +77,14 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == ActivityCode.RC_BACK_HOME) {
                 // TODO Finished Play
                 User.getInstance().updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel() - 1); // -1 Cause it mean he failed this level
-                // Reset game config
-                gameConfig = new GameConfig(gameConfig.getDifficulty());
+                if (data.getBooleanExtra(PrintResultsActivity.CORRECT_ANSWER, false)) {
+                    gameConfig = gameConfig.nextLevel();
+                    updateUI(true);
+                } else {
+                    // Reset game config
+                    gameConfig = new GameConfig(gameConfig.getDifficulty());
+                    updateUI(false);
+                }
             }
         }
         if (requestCode == ActivityCode.RQ_USER) {
@@ -97,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(AnswerActivity.USER_ANSWER, userAnswer);
         intent.putExtra(GameConfig.CONFIG_CORRECT_RESULT, correctResult);
         intent.putExtra(GameConfig.CONFIG_LEVEL, gameConfig.getLevel());
+        intent.putExtra(GameConfig.CONFIG_DIFFICULTY, gameConfig.getDifficulty().toString());
         startActivityForResult(intent, ActivityCode.RQ_SHOW_RESULT);
     }
 
@@ -128,7 +141,27 @@ public class MainActivity extends AppCompatActivity {
         User.getInstance().authentified(firebaseUser);
         FirebaseDB.getFireBaseDB().getUserDatas();
         // TODO [CHANGE] when scores are stored locally
-
         return true;
+    }
+
+    private boolean loadSaveFile() {
+        User user = User.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SAVE_FILE, Context.MODE_PRIVATE);
+        final String userID = user.getID();
+        final int highScore = sharedPreferences.getInt(userID + "/highScore", 0);
+        final String difficulty = sharedPreferences.getString(userID + "/difficulty", "EASY");
+
+        this.gameConfig = new GameConfig(Difficulty.parse(difficulty), highScore);
+
+        return highScore != 0;
+    }
+
+    private void updateUI(boolean continueGame) {
+        TextView textView = (TextView) findViewById(R.id.buttonLaunchGame);
+        if (continueGame) {
+            textView.setText(R.string.continue_game);
+        } else {
+            textView.setText(R.string.launch_a_game);
+        }
     }
 }

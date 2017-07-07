@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         User.getInstance().authentified(firebaseUser);
         FirebaseDB.getFireBaseDB().getUserDatas();
         // TODO [CHANGE] when scores are stored locally
+        return true;
     }
 
     private boolean loadSaveFile() {

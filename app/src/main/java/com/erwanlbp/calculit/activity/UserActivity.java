@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.firebase.FirebaseDB;
+import com.erwanlbp.calculit.model.User;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -82,6 +83,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 firebaseAuthWithGoogle(acct);
             } else {
                 // Signed out, show unauthenticated UI.
+                User.getInstance().disconnect();
                 updateUI(null);
             }
         }
@@ -94,7 +96,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseDB.getFireBaseDB().getUserDatas();
                             backHome(null);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -119,6 +121,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
+                        User.getInstance().disconnect();
                         updateUI(null);
                     }
                 });
@@ -135,6 +138,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
+                        User.getInstance().disconnect();
                         updateUI(null);
                     }
                 });

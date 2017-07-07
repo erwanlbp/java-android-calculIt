@@ -35,12 +35,7 @@ public class MainActivity extends AppCompatActivity {
             startUserActivity(null);
         }
 
-        TextView textView = (TextView) findViewById(R.id.buttonLaunchGame);
-        if(checkSaveFile()){
-            textView.setText(R.string.continue_game);
-        } else {
-            textView.setText(R.string.launch_a_game);
-        }
+        updateUI(loadSaveFile());
     }
 
     public void launchGame(View view) {
@@ -82,14 +77,13 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == ActivityCode.RC_BACK_HOME) {
                 // TODO Finished Play
                 User.getInstance().updateHighScore(gameConfig.getDifficulty(), gameConfig.getLevel() - 1); // -1 Cause it mean he failed this level
-                TextView textView = (TextView) findViewById(R.id.buttonLaunchGame);
                 if (data.getBooleanExtra(PrintResultsActivity.CORRECT_ANSWER, false)) {
                     gameConfig = gameConfig.nextLevel();
-                    textView.setText(R.string.continue_game);
+                    updateUI(true);
                 } else {
                     // Reset game config
                     gameConfig = new GameConfig(gameConfig.getDifficulty());
-                    textView.setText(R.string.launch_a_game);
+                    updateUI(false);
                 }
             }
         }
@@ -151,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean checkSaveFile() {
+    private boolean loadSaveFile() {
         final User user = User.getInstance();
         final SharedPreferences sharedPreferences = this.getSharedPreferences(SAVE_FILE, Context.MODE_PRIVATE);
         final String userID = user.getID();
@@ -161,5 +155,14 @@ public class MainActivity extends AppCompatActivity {
         this.gameConfig = new GameConfig(Difficulty.parse(difficulty), highScore);
 
         return highScore != 0;
+    }
+
+    private void updateUI(boolean continueGame) {
+        TextView textView = (TextView) findViewById(R.id.buttonLaunchGame);
+        if(continueGame) {
+            textView.setText(R.string.continue_game);
+        } else {
+            textView.setText(R.string.launch_a_game);
+        }
     }
 }

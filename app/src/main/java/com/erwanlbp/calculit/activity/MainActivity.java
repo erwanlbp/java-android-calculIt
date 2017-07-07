@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean loadSaveFile() {
-        final User user = User.getInstance();
-        final SharedPreferences sharedPreferences = this.getSharedPreferences(SAVE_FILE, Context.MODE_PRIVATE);
+        User user = User.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SAVE_FILE, Context.MODE_PRIVATE);
         final String userID = user.getID();
         final int highScore = sharedPreferences.getInt(userID + "/highScore", 0);
         final String difficulty = sharedPreferences.getString(userID + "/difficulty", "EASY");
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(boolean continueGame) {
         TextView textView = (TextView) findViewById(R.id.buttonLaunchGame);
-        if(continueGame) {
+        if (continueGame) {
             textView.setText(R.string.continue_game);
         } else {
             textView.setText(R.string.launch_a_game);

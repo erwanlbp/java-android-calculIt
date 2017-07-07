@@ -1,6 +1,8 @@
 package com.erwanlbp.calculit.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,11 +12,10 @@ import android.widget.TextView;
 import com.erwanlbp.calculit.config.ActivityCode;
 import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
-import com.erwanlbp.calculit.config.LocalSave;
+import com.erwanlbp.calculit.model.User;
 
 public class PrintResultsActivity extends AppCompatActivity {
 
-    private LocalSave localSave;
     private boolean correctAnswer;
     public static final String CORRECT_ANSWER = MainActivity.APPNAME + "CORRECT_ANSWER";
 
@@ -49,7 +50,7 @@ public class PrintResultsActivity extends AppCompatActivity {
             buttonNextLevel.setEnabled(false);
             correctAnswer = false;
         } else {
-            localSave.saveCurrentGame(level, difficulty);
+            saveCurrentGame(level, difficulty);
             correctAnswer = true;
         }
     }
@@ -64,5 +65,14 @@ public class PrintResultsActivity extends AppCompatActivity {
     public void nextLevel(View view) {
         setResult(ActivityCode.RC_NEXT_LEVEL);
         finish();
+    }
+
+    private void saveCurrentGame(final int level, final String difficulty) {
+        User user = User.getInstance();
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SAVE_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(user.getID() + "/highScore", level + 1);
+        editor.putString(user.getID() + "/difficulty", difficulty);
+        editor.apply();
     }
 }

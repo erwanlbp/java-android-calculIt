@@ -11,15 +11,13 @@ import java.util.Map;
 
 public class User {
 
-    // ----- Singleton -----
-    private static User user;
+    // FirebaseUser contains the id, name, email
+    private FirebaseUser firebaseUser;
 
-    private User() {
-        this.firebaseUser = null;
-        this.highscores = new HashMap<>();
-        for (Difficulty difficulty : Difficulty.values())
-            highscores.put(difficulty, 0L);
-    }
+    // highscores contains the highscore in every difficulty
+    private Map<Difficulty, Long> highscores;
+
+    private static User user;
 
     public static User getInstance() {
         if (user == null) {
@@ -27,11 +25,13 @@ public class User {
         }
         return user;
     }
-    // ----- Singleton end -----
 
-
-    // FirebaseUser contains the id, name, email
-    private FirebaseUser firebaseUser;
+    private User() {
+        this.firebaseUser = null;
+        this.highscores = new HashMap<>();
+        for (Difficulty difficulty : Difficulty.values())
+            highscores.put(difficulty, 0L);
+    }
 
     public void authentified(FirebaseUser firebaseUser) {
         // TODO [MAYBE] Mettre le Firebase.getUserDatas ici ?
@@ -62,9 +62,6 @@ public class User {
         return isAuthentified() ? firebaseUser.getPhotoUrl() : null;
     }
 
-
-    // highscores contains the highscore in every difficulty
-    private Map<Difficulty, Long> highscores;
 
     public long getHighScore(Difficulty difficulty) {
         return this.highscores.get(difficulty);

@@ -2,22 +2,20 @@ package com.erwanlbp.calculit.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
+import com.erwanlbp.calculit.config.GameConfig;
 
 import java.util.List;
 
-public class GameActivity extends AppCompatActivity {
-
+public class GameActivity extends BaseActivity {
+    private int currentNumber;
     private List<Integer> numbers;
     private int timeToPrint;
-    private int currentNumber;
 
     private TextView tvNumber;
     private Handler changeNumberTimerHandler;
@@ -29,16 +27,13 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Intent intent = getIntent();
-        this.timeToPrint = intent.getIntExtra(GameConfig.CONFIG_TIME_TO_PRINT, GameConfig.CONFIG_DEFAULT_TIME_TO_PRINT);
+        GameConfig.getConfig().nextLevel();
 
-        this.numbers = intent.getIntegerArrayListExtra(GameConfig.CONFIG_NUMBERS);
-        this.numbers.add(0, 0);
-
-        this.tvNumber = (TextView) findViewById(R.id.tvNumber);
-
+        this.numbers = GameConfig.getConfig().getNumbers();
+        this.timeToPrint = GameConfig.getConfig().getTimeToPrint();
         this.currentNumber = 0;
 
+        this.tvNumber = (TextView) findViewById(R.id.tvNumber);
         this.changeNumberTimerHandler = new Handler();
 
         // ----- Progress Bar for the remaining numbers -----
@@ -63,7 +58,8 @@ public class GameActivity extends AppCompatActivity {
         public void run() {
             if (currentNumber >= numbers.size()) {
                 stopChangingNumber();
-                setResult(RESULT_OK);
+                Intent intent = new Intent(GameActivity.this, AnswerActivity.class);
+                startActivityForResult(intent, RQ_ANSWER);
                 finish();
             } else {
                 pbRemainingNumbers.setProgress(currentNumber);

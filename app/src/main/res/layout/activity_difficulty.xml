@@ -10,7 +10,7 @@
         android:layout_weight="12" />
 
     <Button
-        android:id="@+id/buttonEasy"
+        android:id="@+id/btnDifficultyEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="chooseDifficulty"
@@ -26,7 +26,7 @@
         android:textStyle="italic" />
 
     <Button
-        android:id="@+id/buttonMedium"
+        android:id="@+id/btnDifficultyMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="chooseDifficulty"
@@ -42,7 +42,7 @@
         android:textStyle="italic" />
 
     <Button
-        android:id="@+id/buttonHard"
+        android:id="@+id/btnDifficultyHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -59,7 +59,7 @@
         android:textStyle="italic" />
 
     <Button
-        android:id="@+id/buttonGod"
+        android:id="@+id/btnDifficultyGod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="chooseDifficulty"

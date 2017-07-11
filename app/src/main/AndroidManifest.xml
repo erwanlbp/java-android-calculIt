@@ -12,18 +12,16 @@
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.GameActivity" />
         <activity
             android:name=".activity.AnswerActivity"
-            android:windowSoftInputMode="stateVisible" />
-        <activity android:name=".activity.SelectDifficultyActivity" />
-        <activity android:name=".activity.PrintResultsActivity" />
+            android:windowSoftInputMode="stateUnspecified" />
+        <activity android:name=".activity.DifficultyActivity" />
         <activity android:name=".activity.UserActivity" />
-        <activity android:name=".activity.PrintHighScoresActivity" />
+        <activity android:name=".activity.HighscoresActivity" />
     </application>
 
 </manifest>

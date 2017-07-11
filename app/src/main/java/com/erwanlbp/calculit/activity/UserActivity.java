@@ -3,7 +3,6 @@ package com.erwanlbp.calculit.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -29,13 +28,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 
-public class UserActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class UserActivity extends BaseActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private FirebaseAuth auth;
     private GoogleApiClient mGoogleApiClient;
 
     private TextView tvPseudo;
-    private static final int RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +74,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_LOGGED_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 // Signed in successfully, show authenticated UI.
@@ -111,7 +109,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, RC_LOGGED_IN);
     }
 
     private void signOut() {
@@ -184,7 +182,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void backHome(View view) {
-        setResult(RESULT_OK);
+        setResult(auth.getCurrentUser() != null ? RC_LOGGED_IN : RC_NOT_LOGGED_IN);
         finish();
     }
 }

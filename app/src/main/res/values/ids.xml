@@ -7,4 +7,32 @@
     <item name="etUserAnswer" type="id" />
     <item name="label_answer" type="id" />
     <item name="button_answer" type="id" />
+    <item name="btnAnswerNextLevel" type="id" />
+    <item name="btnAnswerbackHome" type="id" />
+    <item name="layoutAnswerBtns" type="id" />
+    <item name="linearLayout" type="id" />
+    <item name="tvAnswerLevelLabel" type="id" />
+    <item name="tvAnswerLevelValue" type="id" />
+    <item name="tvAnswerCorrectOrWrong" type="id" />
+    <item name="layoutAnswer" type="id" />
+    <item name="btnAnswerGo" type="id" />
+    <item name="btnDifficultyEasy" type="id" />
+    <item name="tvEasy" type="id" />
+    <item name="btnDifficultyMedium" type="id" />
+    <item name="tvMedium" type="id" />
+    <item name="btnDifficultyHard" type="id" />
+    <item name="tvHard" type="id" />
+    <item name="btnDifficultyGod" type="id" />
+    <item name="tvGod" type="id" />
+    <item name="pbGameNumbers" type="id" />
+    <item name="spinnerHS" type="id" />
+    <item name="tableLayoutHS" type="id" />
+    <item name="buttonMainToUser" type="id" />
+    <item name="button2" type="id" />
+    <item name="button" type="id" />
+    <item name="button_user_back_home" type="id" />
+    <item name="tvAuthUserPseudo" type="id" />
+    <item name="sign_out_button" type="id" />
+    <item name="remove_user_button" type="id" />
+    <item name="sign_in_button" type="id" />
 </resources>

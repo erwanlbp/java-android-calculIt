@@ -8,18 +8,18 @@
 
 
     <Button
-        android:id="@+id/button_user_back_home"
+        android:id="@id/button_user_back_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:onClick="backHome"
-        android:text="@string/button_back_home"
+        android:text="@string/backToHome"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/tvAuthUserPseudo"
+        android:id="@id/tvAuthUserPseudo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -29,13 +29,13 @@
         android:layout_weight="1"
         android:text="Pseudo"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
+        app:layout_constraintBottom_toTopOf="@id/sign_in_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
+        android:id="@id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -53,7 +53,7 @@
 
 
     <Button
-        android:id="@+id/sign_out_button"
+        android:id="@id/sign_out_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -62,11 +62,11 @@
         android:text="@string/sign_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/sign_in_button"
+        app:layout_constraintRight_toLeftOf="@id/sign_in_button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/remove_user_button"
+        android:id="@id/remove_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -74,7 +74,7 @@
         android:layout_weight="1"
         android:text="@string/rage_quit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/sign_in_button"
+        app:layout_constraintLeft_toRightOf="@id/sign_in_button"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

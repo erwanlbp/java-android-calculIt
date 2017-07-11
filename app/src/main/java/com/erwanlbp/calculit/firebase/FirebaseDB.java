@@ -86,7 +86,7 @@ public class FirebaseDB {
         highScoreUpdates.put("/" + HIGHSCORES + difficulty.toString() + "/" + user.getID() + "/" + HIGHSCORES_SCORE, newScore);
         this.database.updateChildren(highScoreUpdates);
         // Order the highscores by the scores
-        this.database.child(HIGHSCORES+difficulty.toString()).child(user.getID()).setPriority(newScore);
+        this.database.child(HIGHSCORES + difficulty.toString()).child(user.getID()).setPriority(-newScore); // TODO [TEST] pas sur que le -newscore marche
     }
 
     public void deleteAll() {

@@ -10,14 +10,14 @@
         android:layout_weight="12" />
 
     <Button
-        android:id="@+id/buttonEasy"
+        android:id="@id/btnDifficultyEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_easy" />
 
     <TextView
-        android:id="@+id/tvEasy"
+        android:id="@id/tvEasy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
@@ -26,14 +26,14 @@
         android:textStyle="italic" />
 
     <Button
-        android:id="@+id/buttonMedium"
+        android:id="@id/btnDifficultyMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_medium" />
 
     <TextView
-        android:id="@+id/tvMedium"
+        android:id="@id/tvMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
@@ -42,7 +42,7 @@
         android:textStyle="italic" />
 
     <Button
-        android:id="@+id/buttonHard"
+        android:id="@id/btnDifficultyHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -50,7 +50,7 @@
         android:text="@string/difficulty_hard" />
 
     <TextView
-        android:id="@+id/tvHard"
+        android:id="@id/tvHard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
@@ -59,14 +59,14 @@
         android:textStyle="italic" />
 
     <Button
-        android:id="@+id/buttonGod"
+        android:id="@id/btnDifficultyGod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="chooseDifficulty"
         android:text="@string/difficulty_god" />
 
     <TextView
-        android:id="@+id/tvGod"
+        android:id="@id/tvGod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="12"

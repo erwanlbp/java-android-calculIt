@@ -1,7 +1,6 @@
 package com.erwanlbp.calculit.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -20,14 +19,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class PrintHighScoresActivity extends AppCompatActivity {
-    private static final String TAG = "PrintHighScoresActivity";
+public class HighscoresActivity extends BaseActivity {
     private TableLayout tableLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_print_high_score);
+        setContentView(R.layout.activity_highscores);
 
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
         tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);
@@ -88,15 +86,15 @@ public class PrintHighScoresActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 tableLayout.removeAllViewsInLayout();
                 for (DataSnapshot userHighScore : dataSnapshot.getChildren()) {
-                    TableRow row = new TableRow(PrintHighScoresActivity.this);
+                    TableRow row = new TableRow(HighscoresActivity.this);
 
-                    TextView tvName = new TextView(PrintHighScoresActivity.this);
+                    TextView tvName = new TextView(HighscoresActivity.this);
                     tvName.setGravity(Gravity.CENTER);
                     tvName.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
                     tvName.setText(String.valueOf(userHighScore.child(FirebaseDB.HIGHSCORES_NAME).getValue()));
                     row.addView(tvName);
 
-                    TextView tvHighScore = new TextView(PrintHighScoresActivity.this);
+                    TextView tvHighScore = new TextView(HighscoresActivity.this);
                     tvHighScore.setGravity(Gravity.CENTER);
                     tvHighScore.setLayoutParams(new TableRow.LayoutParams(0, android.view.ViewGroup.LayoutParams.WRAP_CONTENT, 1));
                     tvHighScore.setText(String.valueOf(userHighScore.child(FirebaseDB.HIGHSCORES_SCORE).getValue()));

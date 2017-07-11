@@ -32,7 +32,7 @@ public enum Difficulty {
             case 400:
                 return GOD;
             default:
-                return EASY;
+                throw new IllegalArgumentException(String.valueOf(difficulty) + " is not a valid timeToPrint for a difficulty");
         }
     }
 }

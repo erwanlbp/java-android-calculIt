@@ -10,8 +10,6 @@ import com.erwanlbp.calculit.enums.Difficulty;
 
 public class DifficultyActivity extends BaseActivity {
 
-    private static final String TAG = "DifficultyActivity";
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

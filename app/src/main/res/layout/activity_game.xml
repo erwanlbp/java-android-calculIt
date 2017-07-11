@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
-        android:id="@+id/tvNumber"
+        android:id="@id/tvNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -26,7 +26,7 @@
         android:layout_marginEnd="16dp" />
 
     <ProgressBar
-        android:id="@+id/pbGameNumbers"
+        android:id="@id/pbGameNumbers"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

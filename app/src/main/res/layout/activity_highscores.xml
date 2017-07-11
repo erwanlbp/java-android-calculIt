@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Spinner
-            android:id="@+id/spinnerHS"
+            android:id="@id/spinnerHS"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="100"
@@ -28,7 +28,7 @@
             android:entries="@array/high_score_spinner" />
 
         <TableLayout
-            android:id="@+id/tableLayoutHS"
+            android:id="@id/tableLayoutHS"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="10">

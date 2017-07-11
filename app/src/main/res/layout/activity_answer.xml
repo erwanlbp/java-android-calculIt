@@ -7,12 +7,8 @@
     tools:context="com.erwanlbp.calculit.activity.AnswerActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="5"
@@ -30,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/tvAnswerLevelLabel"
+                android:id="@id/tvAnswerLevelLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -45,37 +41,35 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvAnswerLevelValue"
-                android:layout_width="wrap_content"
+                android:id="@id/tvAnswerLevelValue"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
-                app:layout_constraintLeft_toRightOf="@+id/tvAnswerLevelLabel"
+                app:layout_constraintLeft_toRightOf="@id/tvAnswerLevelLabel"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvAnswerCorrectOrWrong"
+            android:id="@id/tvAnswerCorrectOrWrong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="0"
             android:layout_weight="5"
             android:text="@string/label_correct_answer"
             android:textAlignment="center"
             android:textSize="36sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/layoutAnswer"
+            app:layout_constraintBottom_toTopOf="@id/layoutAnswer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
         <LinearLayout
-            android:id="@+id/layoutAnswer"
+            android:id="@id/layoutAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
@@ -83,7 +77,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            app:layout_constraintTop_toBottomOf="@id/linearLayout">
 
             <TextView
                 android:id="@id/label_answer"
@@ -97,7 +91,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/label_answer"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/etUserAnswer"
+                app:layout_constraintBottom_toTopOf="@id/etUserAnswer"
                 app:layout_constraintHorizontal_bias="0.503"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -126,7 +120,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/btnAnswerGo"
+                    android:id="@id/btnAnswerGo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -140,7 +134,7 @@
                     android:text="@string/OkGo"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.508"
-                    app:layout_constraintLeft_toRightOf="@+id/etUserAnswer"
+                    app:layout_constraintLeft_toRightOf="@id/etUserAnswer"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -157,12 +151,12 @@
                 android:textColor="@android:color/holo_red_light"
                 android:visibility="invisible"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etUserAnswer" />
+                app:layout_constraintTop_toBottomOf="@id/etUserAnswer" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutAnswerBtns"
+            android:id="@id/layoutAnswerBtns"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -170,11 +164,9 @@
             tools:layout_editor_absoluteY="8dp">
 
             <Button
-                android:id="@+id/btnAnswerbackHome"
+                android:id="@id/btnAnswerbackHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_row="4"
                 android:layout_weight="1"
                 android:onClick="backHome"
                 android:text="@string/backToHome"
@@ -182,11 +174,9 @@
                 tools:layout_editor_absoluteY="463dp" />
 
             <Button
-                android:id="@+id/btnAnswerNextLevel"
+                android:id="@id/btnAnswerNextLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_column="2"
-                android:layout_row="4"
                 android:layout_weight="1"
                 android:onClick="nextLevel"
                 android:text="@string/nextLevel"

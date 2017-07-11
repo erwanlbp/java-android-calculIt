@@ -18,9 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends BaseActivity {
 
-    public static final String APPNAME = "com.erwanlbp.calculit";
     public static final String SAVE_FILE = APPNAME + "SAVE_FILE";
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -45,9 +43,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RQ_GAME)
-            Log.i(TAG, "onActivityResult received RQ_GAME");
-
         if (requestCode == RQ_USER) {
             if (resultCode == RC_LOGGED_IN) {
                 if (!logUser()) startUserActivity(null);
@@ -70,7 +65,7 @@ public class MainActivity extends BaseActivity {
 
     public void startPrintHighScores(View view) {
         final Intent intent = new Intent(this, HighscoresActivity.class);
-        startActivityForResult(intent, RQ_SHOW_HIGH_SCORE);
+        startActivity(intent);
     }
 
     public void startUserActivity(View view) {

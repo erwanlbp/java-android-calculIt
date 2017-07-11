@@ -21,7 +21,6 @@ public class GameActivity extends BaseActivity {
     private Handler changeNumberTimerHandler;
     private ProgressBar pbRemainingNumbers;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +58,7 @@ public class GameActivity extends BaseActivity {
             if (currentNumber >= numbers.size()) {
                 stopChangingNumber();
                 Intent intent = new Intent(GameActivity.this, AnswerActivity.class);
-                startActivityForResult(intent, RQ_ANSWER);
+                startActivity(intent);
                 finish();
             } else {
                 pbRemainingNumbers.setProgress(currentNumber);

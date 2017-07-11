@@ -17,10 +17,8 @@ import com.erwanlbp.calculit.model.User;
 
 public class AnswerActivity extends BaseActivity {
 
-    public static final String USER_WON = MainActivity.APPNAME + "USER_WON";
     public static final String LOCAL_SAVE_LEVEL = "/level";
     public static final String LOCAL_SAVE_DIFFICULTY = "/difficulty";
-
 
     private boolean answerIsCorrect;
     private boolean hasAnswered;

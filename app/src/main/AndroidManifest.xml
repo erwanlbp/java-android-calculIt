@@ -9,19 +9,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.GameActivity" />
+
         <activity
             android:name=".activity.AnswerActivity"
+            android:parentActivityName="com.erwanlbp.calculit.activity.MainActivity"
             android:windowSoftInputMode="stateUnspecified" />
-        <activity android:name=".activity.DifficultyActivity" />
-        <activity android:name=".activity.UserActivity" />
-        <activity android:name=".activity.HighscoresActivity" />
+
+        <activity
+            android:name=".activity.DifficultyActivity"
+            android:parentActivityName="com.erwanlbp.calculit.activity.MainActivity" />
+
+        <activity
+            android:name=".activity.UserActivity"
+            android:parentActivityName="com.erwanlbp.calculit.activity.MainActivity" />
+
+        <activity
+            android:name=".activity.HighscoresActivity"
+            android:parentActivityName="com.erwanlbp.calculit.activity.MainActivity" />
+
     </application>
 
 </manifest>

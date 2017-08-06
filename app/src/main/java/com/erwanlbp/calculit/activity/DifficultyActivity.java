@@ -1,6 +1,7 @@
 package com.erwanlbp.calculit.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -14,6 +15,9 @@ public class DifficultyActivity extends BaseActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_difficulty);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_difficulty));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void chooseDifficulty(View view) {

@@ -21,7 +21,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="495dp"
+        android:layout_height="518dp"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -65,20 +65,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@id/tvAnswerCorrectOrWrong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:text="@string/label_correct_answer"
-            android:textAlignment="center"
-            android:textSize="36sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/layoutAnswer"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
         <LinearLayout
             android:id="@id/layoutAnswer"
@@ -152,18 +138,63 @@
 
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:visibility="gone">
+
             <TextView
-                android:id="@id/tvAnswerError"
+                android:id="@id/tvAnswerCorrectOrWrong"
                 android:layout_width="match_parent"
-                android:layout_height="19dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:text="@string/errorWrongFormat"
-                android:textColor="@android:color/holo_red_light"
-                android:visibility="invisible"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/label_correct_answer"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                app:layout_constraintBottom_toTopOf="@id/layoutAnswer"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etUserAnswer" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvUserAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/tvAnswerDifferent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="≠"
+                    android:textAlignment="center"
+                    android:textSize="26sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvCorrectAnswer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textStart"
+                    android:textSize="24sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -172,8 +203,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:visibility="gone"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="8dp">
+
+            <Button
+                android:id="@+id/btnAnswerHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="backHome"
+                android:text="@string/home" />
 
             <Button
                 android:id="@+id/btnAnswerRestartGame"

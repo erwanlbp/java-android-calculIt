@@ -15,7 +15,6 @@ import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.model.User;
 
-
 public class AnswerActivity extends BaseActivity {
 
     public static final String LOCAL_SAVE_LEVEL = "/level";
@@ -23,8 +22,7 @@ public class AnswerActivity extends BaseActivity {
 
     private boolean answerIsCorrect;
     private boolean hasAnswered;
-
-    private TextView tvAnswerCorrectOrWrong;
+    private int userAnswer;
 
     private GameConfig config;
 
@@ -41,8 +39,9 @@ public class AnswerActivity extends BaseActivity {
         hasAnswered = false;
         answerIsCorrect = false;
 
-        tvAnswerCorrectOrWrong = (TextView) findViewById(R.id.tvAnswerCorrectOrWrong);
         ((TextView) findViewById(R.id.tvAnswerLevelValue)).setText(String.valueOf(config.getLevel()));
+
+        updateUI();
     }
 
     public void returnAnswer(View view) {
@@ -50,17 +49,14 @@ public class AnswerActivity extends BaseActivity {
         ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         String answerStr = ((EditText) findViewById(R.id.etUserAnswer)).getText().toString();
-        int answer;
         try {
-            answer = Integer.parseInt(answerStr);
+            userAnswer = Integer.parseInt(answerStr);
         } catch (NumberFormatException nfe) {
-            TextView tvError = (TextView) findViewById(R.id.tvAnswerError);
-            tvError.setText(R.string.errorWrongFormat);
             return;
         }
 
         hasAnswered = true;
-        answerIsCorrect = (answer == config.getCorrectResult());
+        answerIsCorrect = (userAnswer == config.getCorrectResult());
 
         updateUI();
 
@@ -75,19 +71,41 @@ public class AnswerActivity extends BaseActivity {
 
     private void updateUI() {
         if (hasAnswered) {
-            tvAnswerCorrectOrWrong.setText(answerIsCorrect ? R.string.label_correct_answer : R.string.label_wrong_answer);
-            tvAnswerCorrectOrWrong.setVisibility(View.VISIBLE);
-            findViewById(R.id.layoutAnswer).setVisibility(View.GONE);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((TextView) findViewById(R.id.tvAnswerCorrectOrWrong)).setText(answerIsCorrect ? R.string.label_correct_answer : R.string.label_wrong_answer);
+            ((TextView) findViewById(R.id.tvUserAnswer)).setText(String.valueOf(userAnswer));
             if (answerIsCorrect)
+                findViewById(R.id.tvUserAnswer).setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            else {
+                // If answer is not correct : show also the correct one
+                TextView correctAnswer = (TextView) findViewById(R.id.tvCorrectAnswer);
+                correctAnswer.setText(String.valueOf(config.getCorrectResult()));
+                correctAnswer.setVisibility(View.VISIBLE);
+                findViewById(R.id.tvAnswerDifferent).setVisibility(View.VISIBLE);
+            }
+            findViewById(R.id.layoutResults).setVisibility(View.VISIBLE);
+            findViewById(R.id.layoutAnswer).setVisibility(View.GONE);
+            if (answerIsCorrect) {
                 findViewById(R.id.btnAnswerNextLevel).setVisibility(View.VISIBLE);
+                findViewById(R.id.btnAnswerRestartGame).setVisibility(View.VISIBLE);
+            }
+            findViewById(R.id.layoutAnswerBtns).setVisibility(View.VISIBLE);
+        } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
     }
 
     @Override
     public void onBackPressed() {
+        // If user didn't answer he can't return home
+        if (!hasAnswered) return;
+        // FIXME If user quit app and restart, he can continue it's play
+
         super.onBackPressed();
-        if (!answerIsCorrect) deleteSavedGame();
-        setResult(RESULT_OK);
+        backHome(null);
+    }
+
+    public void backHome(View view) {
         finish();
     }
 

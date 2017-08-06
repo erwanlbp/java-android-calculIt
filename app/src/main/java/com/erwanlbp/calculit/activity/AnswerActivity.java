@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -31,6 +32,9 @@ public class AnswerActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
+
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_answer));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         config = GameConfig.getConfig();
 
@@ -82,13 +86,14 @@ public class AnswerActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        backHome(null);
-    }
-
-    public void backHome(View view) {
         if (!answerIsCorrect) deleteSavedGame();
         setResult(RESULT_OK);
         finish();
+    }
+
+    public void restartGame(View view) {
+        GameConfig.loadConfig(config.getDifficulty());
+        nextLevel(null);
     }
 
     public void nextLevel(View view) {

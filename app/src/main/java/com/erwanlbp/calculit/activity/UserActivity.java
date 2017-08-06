@@ -3,6 +3,7 @@ package com.erwanlbp.calculit.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -40,6 +41,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_user));
+
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.remove_user_button).setOnClickListener(this);
@@ -59,6 +62,8 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
                 .build();
 
         auth = FirebaseAuth.getInstance();
+
+        updateUI(null);
     }
 
     @Override
@@ -83,7 +88,7 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
             } else {
                 // Signed out, show unauthenticated UI.
                 User.getInstance().disconnect();
-                Log.e("UserActivity","ERROR LOGIN");
+                Log.e("UserActivity", "ERROR LOGIN");
                 updateUI(null);
             }
         }
@@ -172,13 +177,21 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
             findViewById(R.id.remove_user_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_button).setVisibility(View.VISIBLE);
             tvPseudo.setText(user.getDisplayName());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         } else {
             tvPseudo.setText(null);
-            findViewById(R.id.button_user_back_home).setVisibility(View.GONE);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_button).setVisibility(View.GONE);
             findViewById(R.id.remove_user_button).setVisibility(View.GONE);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        // Can't return home if not logged in
+        if (auth.getCurrentUser() == null) return;
     }
 
     public void backHome(View view) {

@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context="com.erwanlbp.calculit.activity.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="@dimen/toolbar_elevation"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@id/tvAppName"
         android:layout_width="wrap_content"
@@ -24,13 +39,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
         android:onClick="startGame"
         android:text="@string/launch_a_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAppName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAppName"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@id/buttonMainToUser"
@@ -42,7 +58,8 @@
         android:onClick="startUserActivity"
         android:text="@string/button_user_activity"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="16dp" />
 
     <Button
         android:id="@id/button2"
@@ -54,7 +71,8 @@
         android:onClick="startPrintHighScores"
         android:text="@string/high_score"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="148dp" />
 
     <Button
         android:id="@id/button"
@@ -66,6 +84,7 @@
         android:onClick="startDifficulty"
         android:text="@string/difficulty"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="16dp" />
 
 </android.support.constraint.ConstraintLayout>

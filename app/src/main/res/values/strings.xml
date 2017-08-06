@@ -31,6 +31,7 @@
     <string name="errorWrongFormat">Error : wrong format</string>
     <string name="OkGo">OK Go !</string>
     <string name="restartGame">Restart a game</string>
+    <string name="home">Home</string>
     <string-array name="high_score_spinner">
         <item>Personal bests</item>
         <item>Global Easy</item>

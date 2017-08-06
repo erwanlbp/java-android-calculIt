@@ -44,19 +44,6 @@ public class MainActivity extends BaseActivity {
         updateUI();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RQ_USER) {
-            if (resultCode == RC_LOGGED_IN) {
-                if (!logUser()) startUserActivity(null);
-            } else {
-                // TODO [IMPROVE] Allow user not to be authentified
-                startUserActivity(null);
-            }
-        }
-    }
-
     public void startGame(View view) {
         final Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);

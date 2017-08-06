@@ -100,7 +100,7 @@ public class GameConfig {
     }
 
     public void reset() {
-        gameConfig = new GameConfig(gameConfig.getDifficulty());
+        gameConfig = new GameConfig(this.getDifficulty());
     }
 }
 

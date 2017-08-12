@@ -1,7 +1,5 @@
 package com.erwanlbp.calculit.firebase;
 
-import android.util.Log;
-
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.model.User;
 import com.google.firebase.database.DataSnapshot;
@@ -64,12 +62,11 @@ public class FirebaseDB {
                     if (highscore != null)
                         userInner.setHighScore(difficulty, (long) highscore);
                 }
-                Log.i(TAG, "Get user " + userInner.getID());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "Cancelled getUserDatas");
+                //TODO Log error
             }
         });
     }

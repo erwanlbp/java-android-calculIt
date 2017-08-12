@@ -37,5 +37,6 @@
         <item>Global Easy</item>
         <item>Global Medium</item>
         <item>Global Hard</item>
+        <item>Global God</item>
     </string-array>
 </resources>

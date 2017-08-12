@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public ProgressBar mProgressBar;
 
-    public void showProgressBar() {
+    public void showProgressDialog() {
         if (mProgressBar == null) {
             mProgressBar = new ProgressBar(this);
             mProgressBar.setIndeterminate(true);

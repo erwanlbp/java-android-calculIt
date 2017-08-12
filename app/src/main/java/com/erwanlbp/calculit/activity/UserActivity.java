@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,26 +85,25 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
                 GoogleSignInAccount acct = result.getSignInAccount();
                 firebaseAuthWithGoogle(acct);
             } else {
-                // Signed out, show unauthenticated UI.
+                Toast.makeText(this, result.getStatus().toString(), Toast.LENGTH_SHORT).show();
                 User.getInstance().disconnect();
-                Log.e("UserActivity", "ERROR LOGIN");
                 updateUI(null);
             }
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        hideProgressDialog();
                         if (task.isSuccessful()) {
                             FirebaseDB.getFireBaseDB().getUserDatas();
                             backHome();
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(UserActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UserActivity.this, "Auth failed", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
                     }
@@ -126,8 +124,13 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
-                        User.getInstance().disconnect();
-                        updateUI(null);
+                        hideProgressDialog();
+                        if (status.isSuccess()) {
+                            User.getInstance().disconnect();
+                            updateUI(null);
+                        } else {
+                            Toast.makeText(UserActivity.this, status.getStatusCode(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
@@ -143,14 +146,20 @@ public class UserActivity extends BaseActivity implements View.OnClickListener, 
                 new ResultCallback<Status>() {
                     @Override
                     public void onResult(@NonNull Status status) {
-                        User.getInstance().disconnect();
-                        updateUI(null);
+                        hideProgressDialog();
+                        if (status.isSuccess()) {
+                            User.getInstance().disconnect();
+                            updateUI(null);
+                        } else {
+                            Toast.makeText(UserActivity.this, status.getStatusCode(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }
 
     @Override
     public void onClick(View view) {
+        showProgressDialog();
         switch (view.getId()) {
             case R.id.sign_in_button:
                 signIn();

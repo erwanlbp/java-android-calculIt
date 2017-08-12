@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.R;
@@ -85,7 +86,7 @@ public class MainActivity extends BaseActivity {
         try {
             difficulty = Difficulty.parse(difficultyStr);
         } catch (Exception e) {
-            Log.e(TAG, "Can't parse difficulty " + difficultyStr + " in loadSaveFile()");
+            Toast.makeText(this, "Error loading save file", Toast.LENGTH_SHORT).show();
             return;
         }
 

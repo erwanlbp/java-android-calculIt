@@ -15,8 +15,8 @@ android {
         applicationId "com.erwanlbp.calculit"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.3"
+        versionCode 6
+        versionName "1.3.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -40,6 +40,9 @@ dependencies {
     // Firebase Authentification
     compile 'com.google.firebase:firebase-auth:11.0.2'
     compile 'com.google.android.gms:play-services-auth:11.0.2'
+    // Butterknife
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // Lombock, for easier getters/setters
     //    compile 'org.projectlombok:lombok:1.16.18'
     // Others

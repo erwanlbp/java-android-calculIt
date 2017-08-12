@@ -6,25 +6,34 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.config.GameConfig;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class GameActivity extends BaseActivity {
     private int currentNumber;
     private List<Integer> numbers;
     private int timeToPrint;
 
-    private TextView tvNumber;
     private Handler changeNumberTimerHandler;
-    private ProgressBar pbRemainingNumbers;
+
+    @BindView(R.id.tvNumber)
+    TextView tvNumber;
+    @BindView(R.id.pbGameNumbers)
+    ProgressBar pbRemainingNumbers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        ButterKnife.bind(this);
 
         GameConfig.getConfig().nextLevel();
 
@@ -32,11 +41,9 @@ public class GameActivity extends BaseActivity {
         this.timeToPrint = GameConfig.getConfig().getTimeToPrint();
         this.currentNumber = 0;
 
-        this.tvNumber = (TextView) findViewById(R.id.tvNumber);
         this.changeNumberTimerHandler = new Handler();
 
         // ----- Progress Bar for the remaining numbers -----
-        this.pbRemainingNumbers = (ProgressBar) findViewById(R.id.pbGameNumbers);
         this.pbRemainingNumbers.setMax(this.numbers.size() - 1); // Because we added the zero to the numbers list
     }
 
@@ -50,6 +57,11 @@ public class GameActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         this.stopChangingNumber();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Wait for the game to finish...", Toast.LENGTH_SHORT).show();
     }
 
     private Runnable changeNumberTimerRunnable = new Runnable() {

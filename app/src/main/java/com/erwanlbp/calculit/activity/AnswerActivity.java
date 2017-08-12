@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.config.GameConfig;
 import com.erwanlbp.calculit.enums.Difficulty;
 import com.erwanlbp.calculit.model.User;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AnswerActivity extends BaseActivity {
 
@@ -24,6 +29,31 @@ public class AnswerActivity extends BaseActivity {
     private boolean hasAnswered;
     private int userAnswer;
 
+    @BindView(R.id.tvUserAnswer)
+    TextView tvUserAnswer;
+    @BindView(R.id.tvAnswerLevelValue)
+    TextView tvAnswerLevelValue;
+    @BindView(R.id.etUserAnswer)
+    EditText etUserAnswer;
+    @BindView(R.id.tvAnswerCorrectOrWrong)
+    TextView tvAnswerCorrectOrWrong;
+    @BindView(R.id.tvCorrectAnswer)
+    TextView tvCorrectAnswer;
+    @BindView(R.id.tvAnswerDifferent)
+    TextView tvAnswerDifferent;
+    @BindView(R.id.layoutResults)
+    View layoutResults;
+    @BindView(R.id.layoutAnswer)
+    View layoutAnswer;
+    @BindView(R.id.btnAnswerNextLevel)
+    Button btnAnswerNextLevel;
+    @BindView(R.id.btnAnswerRestartGame)
+    Button btnAnswerRestartGame;
+    @BindView(R.id.layoutAnswerBtns)
+    View layoutAnswerBtns;
+    @BindView(R.id.toolbar_answer)
+    Toolbar toolbarAnswer;
+
     private GameConfig config;
 
     @Override
@@ -31,7 +61,9 @@ public class AnswerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_answer));
+        ButterKnife.bind(this);
+
+        setSupportActionBar(toolbarAnswer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         config = GameConfig.getConfig();
@@ -39,16 +71,17 @@ public class AnswerActivity extends BaseActivity {
         hasAnswered = false;
         answerIsCorrect = false;
 
-        ((TextView) findViewById(R.id.tvAnswerLevelValue)).setText(String.valueOf(config.getLevel()));
+        tvAnswerLevelValue.setText(String.valueOf(config.getLevel()));
 
         updateUI();
     }
 
+    @OnClick(R.id.btnAnswerGo)
     public void returnAnswer(View view) {
         // Hide keyboard
         ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(view.getWindowToken(), 0);
 
-        String answerStr = ((EditText) findViewById(R.id.etUserAnswer)).getText().toString();
+        String answerStr = etUserAnswer.getText().toString();
         try {
             userAnswer = Integer.parseInt(answerStr);
         } catch (NumberFormatException nfe) {
@@ -72,24 +105,23 @@ public class AnswerActivity extends BaseActivity {
     private void updateUI() {
         if (hasAnswered) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            ((TextView) findViewById(R.id.tvAnswerCorrectOrWrong)).setText(answerIsCorrect ? R.string.label_correct_answer : R.string.label_wrong_answer);
-            ((TextView) findViewById(R.id.tvUserAnswer)).setText(String.valueOf(userAnswer));
+            tvAnswerCorrectOrWrong.setText(answerIsCorrect ? R.string.label_correct_answer : R.string.label_wrong_answer);
+            tvUserAnswer.setText(String.valueOf(userAnswer));
             if (answerIsCorrect)
-                findViewById(R.id.tvUserAnswer).setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                tvUserAnswer.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             else {
                 // If answer is not correct : show also the correct one
-                TextView correctAnswer = (TextView) findViewById(R.id.tvCorrectAnswer);
-                correctAnswer.setText(String.valueOf(config.getCorrectResult()));
-                correctAnswer.setVisibility(View.VISIBLE);
-                findViewById(R.id.tvAnswerDifferent).setVisibility(View.VISIBLE);
+                tvCorrectAnswer.setText(String.valueOf(config.getCorrectResult()));
+                tvCorrectAnswer.setVisibility(View.VISIBLE);
+                tvAnswerDifferent.setVisibility(View.VISIBLE);
             }
-            findViewById(R.id.layoutResults).setVisibility(View.VISIBLE);
-            findViewById(R.id.layoutAnswer).setVisibility(View.GONE);
+            layoutResults.setVisibility(View.VISIBLE);
+            layoutAnswer.setVisibility(View.GONE);
             if (answerIsCorrect) {
-                findViewById(R.id.btnAnswerNextLevel).setVisibility(View.VISIBLE);
-                findViewById(R.id.btnAnswerRestartGame).setVisibility(View.VISIBLE);
+                btnAnswerNextLevel.setVisibility(View.VISIBLE);
+                btnAnswerRestartGame.setVisibility(View.VISIBLE);
             }
-            findViewById(R.id.layoutAnswerBtns).setVisibility(View.VISIBLE);
+            layoutAnswerBtns.setVisibility(View.VISIBLE);
         } else {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
@@ -105,15 +137,18 @@ public class AnswerActivity extends BaseActivity {
         backHome(null);
     }
 
+    @OnClick(R.id.btnAnswerHome)
     public void backHome(View view) {
         finish();
     }
 
+    @OnClick(R.id.btnAnswerRestartGame)
     public void restartGame(View view) {
         GameConfig.loadConfig(config.getDifficulty());
         nextLevel(null);
     }
 
+    @OnClick(R.id.btnAnswerNextLevel)
     public void nextLevel(View view) {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);

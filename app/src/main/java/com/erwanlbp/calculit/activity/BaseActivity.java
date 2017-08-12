@@ -1,8 +1,14 @@
 package com.erwanlbp.calculit.activity;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.erwanlbp.calculit.R;
+
+import butterknife.BindView;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -23,19 +29,20 @@ public class BaseActivity extends AppCompatActivity {
 
     // ===== END CONSTANTS =====
 
-
+    @Nullable
+    @BindView(R.id.loading)
     public ProgressBar mProgressBar;
 
     public void showProgressDialog() {
         if (mProgressBar == null) {
-            mProgressBar = new ProgressBar(this);
-            mProgressBar.setIndeterminate(true);
+            Toast.makeText(this, "Loading ...", Toast.LENGTH_SHORT).show();
+            return;
         }
-
+        mProgressBar.setIndeterminate(true);
         mProgressBar.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressDialog() {
+    public void hideProgressBar() {
         if (mProgressBar != null && mProgressBar.isShown()) {
             mProgressBar.setVisibility(View.GONE);
         }
@@ -44,6 +51,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        hideProgressDialog();
+        hideProgressBar();
     }
 }

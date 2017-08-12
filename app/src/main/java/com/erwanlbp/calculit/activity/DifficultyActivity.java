@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.config.GameConfig;
@@ -35,9 +36,8 @@ public class DifficultyActivity extends BaseActivity {
                 GameConfig.loadConfig(Difficulty.GOD);
                 break;
             default:
-                Log.e(TAG, "Unkonw button ID " + view.getId());
-                GameConfig.loadConfig(Difficulty.EASY);
-                break;
+                Toast.makeText(this, "Unkonw button ID " + view.getId(), Toast.LENGTH_SHORT).show();
+                return;
         }
 
         setResult(RESULT_OK);

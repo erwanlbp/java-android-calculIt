@@ -2,7 +2,6 @@ package com.erwanlbp.calculit.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erwanlbp.calculit.R;
 import com.erwanlbp.calculit.enums.Difficulty;
@@ -46,7 +46,8 @@ public class HighscoresActivity extends BaseActivity {
                         showGlobalHighScores(difficulty);
                         return;
                     } catch (Exception e) {
-                        Log.e(TAG, "Error selecting index");
+                        hideProgressDialog();
+                        Toast.makeText(HighscoresActivity.this, "Error selecting index " + selectedIndex, Toast.LENGTH_SHORT).show();
                     }
                 }
                 showPersonnalHighScores();
@@ -54,14 +55,13 @@ public class HighscoresActivity extends BaseActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                showPersonnalHighScores();
+                Toast.makeText(HighscoresActivity.this, "Nothing selected", Toast.LENGTH_SHORT).show(); // TODO [REMOVE]
             }
         });
     }
 
     private void showPersonnalHighScores() {
         tableLayout.removeAllViewsInLayout();
-        Log.i(TAG, "showPersonnalHighscores");
         for (Difficulty difficulty : Difficulty.values()) {
             TableRow row = new TableRow(this);
 
@@ -82,8 +82,7 @@ public class HighscoresActivity extends BaseActivity {
     }
 
     private void showGlobalHighScores(final Difficulty difficulty) {
-        tableLayout.removeAllViewsInLayout();
-        Log.i(TAG, "showGlobalHighscores for " + difficulty.toString());
+        showProgressDialog();
 
         FirebaseDatabase.getInstance().getReference(FirebaseDB.HIGHSCORES + difficulty.toString()).limitToLast(100).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -106,14 +105,14 @@ public class HighscoresActivity extends BaseActivity {
 
                     tableLayout.addView(row);
                 }
+                hideProgressDialog();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "Failed show highscores-" + difficulty.toString());
+                hideProgressDialog();
+                Toast.makeText(HighscoresActivity.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 }

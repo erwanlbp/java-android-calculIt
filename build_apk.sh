@@ -2,7 +2,7 @@
 
 echo
 echo "--- Build APK"
-gradleAssemble="$(./gradlew assemble)"
+gradleAssemble="$(./gradlew assembleRelease)"
 checkBuildFailed=$(echo $gradleAssemble | grep "BUILD FAILED")
 if [ -n "$checkBuildFailed" ]; then
 	exit 1
@@ -30,7 +30,7 @@ if [ "$incAppVersion" == "incAppVersion" ]; then
 
 	echo
 	echo "--- Re-build the app"
-	gradleAssemble="$(./gradlew assemble)"
+	gradleAssemble="$(./gradlew assembleRelease)"
 	checkBuildFailed=$(echo $gradleAssemble | grep "BUILD FAILED")
 	if [ -n "$checkBuildFailed" ]; then
 		exit 1
@@ -43,6 +43,6 @@ rm -f *.apk
 
 echo
 echo "--- Move the APK to ./$apkName"
-cp ./app/build/outputs/apk/app-release-unsigned.apk ./$apkName
+cp ./app/build/outputs/apk/app-release.apk ./$apkName
 
 echo

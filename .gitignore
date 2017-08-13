@@ -11,3 +11,4 @@
 
 Dockerfile
 keystore.properties
+*.apk

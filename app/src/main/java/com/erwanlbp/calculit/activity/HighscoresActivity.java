@@ -20,33 +20,40 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class HighscoresActivity extends BaseActivity {
-    private TableLayout tableLayout;
+
+    @BindView(R.id.tableLayoutHS)
+    TableLayout tableLayout;
+    @BindView(R.id.spinnerHS)
+    Spinner spinnerHS;
+    @BindView(R.id.toolbar_highscores)
+    Toolbar toolbarHighscores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_highscores);
 
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_highscores));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ButterKnife.bind(this);
 
-        final Spinner spinner = (Spinner) findViewById(R.id.spinnerHS);
-        tableLayout = (TableLayout) findViewById(R.id.tableLayoutHS);
+        setSupportActionBar(toolbarHighscores);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         showPersonnalHighScores();
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerHS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                int selectedIndex = spinner.getSelectedItemPosition();
+                int selectedIndex = spinnerHS.getSelectedItemPosition();
                 if (selectedIndex > 0) {
                     try {
                         final Difficulty difficulty = Difficulty.values()[selectedIndex - 1];
                         showGlobalHighScores(difficulty);
                         return;
                     } catch (Exception e) {
-                        hideProgressDialog();
                         Toast.makeText(HighscoresActivity.this, "Error selecting index " + selectedIndex, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -87,6 +94,7 @@ public class HighscoresActivity extends BaseActivity {
         FirebaseDatabase.getInstance().getReference(FirebaseDB.HIGHSCORES + difficulty.toString()).limitToLast(100).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                hideProgressBar();
                 tableLayout.removeAllViewsInLayout();
                 for (DataSnapshot userHighScore : dataSnapshot.getChildren()) {
                     TableRow row = new TableRow(HighscoresActivity.this);
@@ -105,13 +113,12 @@ public class HighscoresActivity extends BaseActivity {
 
                     tableLayout.addView(row);
                 }
-                hideProgressDialog();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                hideProgressDialog();
                 Toast.makeText(HighscoresActivity.this, databaseError.toString(), Toast.LENGTH_SHORT).show();
+                hideProgressBar();
             }
         });
     }
